@@ -9,10 +9,16 @@
 import UIKit
 import WebKit
 
+/***************************************************
+ *
+ ***************************************************/
+
 class ViewController: UIViewController, WKNavigationDelegate {
     
     var webView: WKWebView!
     var openImage: UIImage?
+    var progressView: UIProgressView!
+    
     
     override func loadView(){
         webView = WKWebView()
@@ -20,16 +26,51 @@ class ViewController: UIViewController, WKNavigationDelegate {
         view = webView
         
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        makeTheToolBar()
+        
+        /***************************************************
+         * with add observr you are observing the progress view
+         * which you will also have to put a remove observer.
+         * You have to do that so that you know when you are done
+         * observing the value.
+         ***************************************************/
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         
         let url = URL(string: "https://www.hackingwithswift.com")!
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
-    
+        
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
+        
+        
+    }
+    
+    func makeTheToolBar(){
+        let progress = makeCustomProgressViewButtonForToolBar()
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                     target: self, action: nil)
+        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh,
+                                      target: nil, action: #selector(webView.reload))
+        
+        toolbarItems = [progress, spacer, refresh]
+        navigationController?.isToolbarHidden = false
+    }
+    
+    func makeCustomProgressViewButtonForToolBar() -> UIBarButtonItem{
+        progressView = UIProgressView(progressViewStyle: .default)
+        // Makes the progress view automatically take the size it needs
+        progressView.sizeToFit()
+        let progress = UIBarButtonItem(customView: progressView)
+        return progress
+    }
+    
+    @objc
+    func loadProgressView(){
         
     }
     
@@ -59,6 +100,12 @@ class ViewController: UIViewController, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         title = webView.title
     }
-
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "estimatedProgress"{
+            progressView.progress = Float(webView.estimatedProgress)
+        }
+    }
+    
 }
 
