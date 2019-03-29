@@ -53,12 +53,29 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     func makeTheToolBar(){
         let progress = makeCustomProgressViewButtonForToolBar()
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                                     target: self, action: nil)
-        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh,
-                                      target: nil, action: #selector(webView.reload))
         
-        toolbarItems = [progress, spacer, refresh]
+        let goForward = UIBarButtonItem(title: "Forward",
+                                        style: .plain,
+                                        target: nil,
+                                        action: #selector(webView.goForward))
+        
+        let goBackward = UIBarButtonItem(title: "Back",
+                                         style: .plain,
+                                         target: nil,
+                                         action: #selector(webView.goBack))
+        
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                     target: self,
+                                     action: nil)
+        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh,
+                                      target: nil,
+                                      action: #selector(webView.reload))
+        
+        toolbarItems = [goBackward, spacer,
+                        goForward,spacer,
+                        progress, spacer,
+                        refresh]
+        
         navigationController?.isToolbarHidden = false
     }
     
@@ -70,11 +87,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         return progress
     }
     
-    @objc
-    func loadProgressView(){
-        
-    }
-    
+
     func loadImage()-> UIImage?{
         let image = UIImage(named: "chekcmark.png")
         return image
@@ -133,6 +146,15 @@ class ViewController: UIViewController, WKNavigationDelegate {
             }
         }
         decisionHandler(.cancel)
+        showWebsiteDeniedAlert()
+    }
+    
+    
+    func showWebsiteDeniedAlert(){
+        let vc = UIAlertController(title: "Danger", message: "That URL is not allowed", preferredStyle: .alert)
+        vc.addAction(UIAlertAction(title: "Okey Dokey", style: .default))
+        present(vc, animated: true)
+        
     }
     
 }
