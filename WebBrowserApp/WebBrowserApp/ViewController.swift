@@ -18,6 +18,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
     var webView: WKWebView!
     var openImage: UIImage?
     var progressView: UIProgressView!
+    var websites = ["apple.com", "hackingwithswift.com"]
     
     
     override func loadView(){
@@ -40,7 +41,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
          ***************************************************/
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         
-        let url = URL(string: "https://www.hackingwithswift.com")!
+        let url = URL(string: "https://www.\(websites[0])")!
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
         
@@ -79,12 +80,16 @@ class ViewController: UIViewController, WKNavigationDelegate {
         return image
     }
     
+    
     @objc
     func openTapped(){
         
         let vc = UIAlertController(title: "Open page...", message: nil, preferredStyle: .actionSheet)
-        vc.addAction(UIAlertAction(title: "apple.com", style: .default, handler: openPage))
-        vc.addAction(UIAlertAction(title: "hackingwithswift.com", style: .default, handler: openPage))
+        
+        for website in websites {
+            vc.addAction(UIAlertAction(title: "\(website)", style: .default, handler: openPage))
+        }
+
         vc.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         vc.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
         present(vc,animated: true)
@@ -105,6 +110,29 @@ class ViewController: UIViewController, WKNavigationDelegate {
         if keyPath == "estimatedProgress"{
             progressView.progress = Float(webView.estimatedProgress)
         }
+        
+    }
+    
+    /***************************************************
+     * This method is either called in the beginning or at the end of loading
+     * because of this we have the escaping keyword for the closure. This function
+     * will check to see if the website is permissable. Meaning if it is one
+     * of the websites we wanted to see then the progress view will be allowed
+     * to load. Else it won't.
+     ***************************************************/
+
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        let url = navigationAction.request.url
+        
+        if let host = url?.host {
+            for website in websites {
+                if host.contains(website){
+                    decisionHandler(.allow)
+                    return
+                }
+            }
+        }
+        decisionHandler(.cancel)
     }
     
 }
