@@ -9,16 +9,12 @@
 import UIKit
 import WebKit
 
-/***************************************************
- *
- ***************************************************/
-
 class ViewController: UIViewController, WKNavigationDelegate {
     
     var webView: WKWebView!
     var openImage: UIImage?
     var progressView: UIProgressView!
-    var websites = ["apple.com", "hackingwithswift.com"]
+    var detailWebesites = ""
     
     
     override func loadView(){
@@ -41,12 +37,12 @@ class ViewController: UIViewController, WKNavigationDelegate {
          ***************************************************/
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         
-        let url = URL(string: "https://www.\(websites[0])")!
+        print(detailWebesites)
+        print(detailWebesites)
+        let url = URL(string: "https://www.\(detailWebesites)")!
+        
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
-        
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
         
         
     }
@@ -87,33 +83,6 @@ class ViewController: UIViewController, WKNavigationDelegate {
         return progress
     }
     
-
-    func loadImage()-> UIImage?{
-        let image = UIImage(named: "chekcmark.png")
-        return image
-    }
-    
-    
-    @objc
-    func openTapped(){
-        
-        let vc = UIAlertController(title: "Open page...", message: nil, preferredStyle: .actionSheet)
-        
-        for website in websites {
-            vc.addAction(UIAlertAction(title: "\(website)", style: .default, handler: openPage))
-        }
-
-        vc.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        vc.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
-        present(vc,animated: true)
-        
-        
-    }
-    
-    func openPage(action: UIAlertAction) {
-        let url = URL(string: "https://" + action.title!)!
-        webView.load(URLRequest(url: url))
-    }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         title = webView.title
@@ -138,7 +107,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         let url = navigationAction.request.url
         
         if let host = url?.host {
-            for website in websites {
+            for website in detailWebesites {
                 if host.contains(website){
                     decisionHandler(.allow)
                     return
@@ -152,10 +121,12 @@ class ViewController: UIViewController, WKNavigationDelegate {
     
     func showWebsiteDeniedAlert(){
         let vc = UIAlertController(title: "Danger", message: "That URL is not allowed", preferredStyle: .alert)
-        vc.addAction(UIAlertAction(title: "Okey Dokey", style: .default))
+        vc.addAction(UIAlertAction(title: "Okey Dokey", style: .cancel))
         present(vc, animated: true)
+ 
         
     }
+    
     
 }
 
