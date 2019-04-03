@@ -92,16 +92,34 @@ class ViewController: UITableViewController {
         
     }
     
-    func isPossible(word: String) -> Bool{
+    func isPossible(word: String) -> Bool {
+        guard var tempWord = title?.lowercased() else {return false}
+        for letter in word{
+            // Using .firstIndex looks inside of tempWord and checks to see
+            // if the letter is inside of it. The first letter that looks like
+            // letter will be then removed from the tempWord. If the entire loop
+            // is able to proceed that means there was enough letters that are
+            // found in the title that can be used whic is acceptable or in
+            // other words it's possible.
+            if let position = tempWord.firstIndex(of: letter){
+                tempWord.remove(at: position)
+            }else {
+                return false
+            }
+        }
         return true
     }
     
     func isOriginal(word: String)-> Bool{
-        return true
+        return !usedWords.contains(word)
     }
     
-    func isReal(word: String) -> Bool{
-        return true
+    func isReal(word: String) -> Bool {
+        let checker = UITextChecker()
+        // Obj C syntax
+        let range = NSRange(location: 0, length: word.utf16.count)
+        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+        return misspelledRange.location == NSNotFound
     }
     
     
