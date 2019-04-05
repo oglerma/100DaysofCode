@@ -19,42 +19,12 @@ class ViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                                             target: self,
                                                             action: #selector(promptForAnswer))
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "New Game", style: .plain, target: self, action: #selector(startGame))
         loadWords()
         startGame()
         
     }
-    
-    // Search for txt file in project and load content into an array
-    func loadWords(){
-        if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt"){
-            if let startWords = try? String(contentsOf: startWordsURL){
-                allWords = startWords.components(separatedBy: "\n")
-            }
-        }
-        if allWords.isEmpty {
-            allWords = ["silkworm"]
-        }
-    }
-
-    func startGame(){
-        title = allWords.randomElement()
-        usedWords.removeAll(keepingCapacity: true)
-        
-        // refreshes the current tableview controller
-        tableView.reloadData()
-    }
-    
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return usedWords.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Word", for: indexPath)
-        cell.textLabel?.text = usedWords[indexPath.row]
-        return cell
-    }
-    
     @objc func promptForAnswer(){
         let ac = UIAlertController(title: "Enter answer", message: nil, preferredStyle: .alert)
         ac.addTextField()
@@ -71,11 +41,42 @@ class ViewController: UITableViewController {
         
     }
     
+    
+    // Search for txt file in project and load content into an array
+    func loadWords(){
+        if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt"){
+            if let startWords = try? String(contentsOf: startWordsURL){
+                allWords = startWords.components(separatedBy: "\n")
+            }
+        }
+        if allWords.isEmpty {
+            allWords = ["silkworm"]
+        }
+    }
+
+    @objc
+    func startGame(){
+        title = allWords.randomElement()
+        usedWords.removeAll(keepingCapacity: true)
+        // refreshes the current tableview controller
+        tableView.reloadData()
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return usedWords.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Word", for: indexPath)
+        cell.textLabel?.text = usedWords[indexPath.row]
+        return cell
+    }
+    
+
     func submit(_ answer: String){
         let lowerAnswer = answer.lowercased()
-        
-        let errorTitle: String
-        let errorMessage: String
+
         
         if isPossible(word: lowerAnswer){
             if isOriginal(word: lowerAnswer){
@@ -92,21 +93,18 @@ class ViewController: UITableViewController {
                     tableView.insertRows(at: [indexPath], with: .automatic)
                     return
                 }else{
-                    errorTitle = "Word not recognized"
-                    errorMessage = "You can't just make them up, you know!"
+                    showErrorMessage(errorTitlle: "Word not recognized or you used 3 characters or less",
+                                     errorMessage: "You can't just make them up, you know!")
+                    
                 }
             }else{
-                errorTitle = "Word already used"
-                errorMessage = "Be more original!"
+                showErrorMessage(errorTitlle: "Word already used",
+                                 errorMessage: "Be more original!")
             }
         }else{
-            errorTitle = "Word not possible"
-            errorMessage = "You can't spell the word from \(title!.lowercased())!"
+            showErrorMessage(errorTitlle: "Word not possible",
+                             errorMessage: "You can't spell the word from \(title!.lowercased())!")
         }
-        
-        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .cancel))
-        present(ac, animated: true)
         
     }
     
@@ -137,10 +135,19 @@ class ViewController: UITableViewController {
         // Obj C syntax
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
-        return misspelledRange.location == NSNotFound
+        
+        let isNotTheSameWord = title! == word
+        let isNOtLessThanThreeLetters = word.count <= 3
+        
+        
+        return misspelledRange.location == NSNotFound && !isNotTheSameWord && !isNOtLessThanThreeLetters
     }
     
-    
+    func showErrorMessage(errorTitlle: String, errorMessage: String){
+        let ac = UIAlertController(title: errorTitlle, message: errorMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Okey Dokey", style: .cancel))
+        present(ac, animated: true)
+    }
 
 }
 
