@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jkX-28-zod">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jkX-28-zod">
     <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,6 +20,9 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJk-5K-YSP">
                                 <rect key="frame" x="107" y="100" width="200" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="bJk-5K-YSP" secondAttribute="height" multiplier="2:1" id="g40-Pe-t4T"/>
+                                </constraints>
                                 <state key="normal" image="us"/>
                                 <connections>
                                     <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eZZ-2n-Buu"/>
@@ -27,6 +30,9 @@
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tIZ-TR-Kud">
                                 <rect key="frame" x="107" y="220" width="200" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="tIZ-TR-Kud" secondAttribute="height" multiplier="2:1" id="jNc-hh-pAi"/>
+                                </constraints>
                                 <state key="normal" image="us"/>
                                 <connections>
                                     <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H9y-kB-CQl"/>
@@ -34,6 +40,9 @@
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Few-tZ-h1y">
                                 <rect key="frame" x="107" y="348" width="200" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Few-tZ-h1y" secondAttribute="height" multiplier="2:1" id="bUt-od-jaU"/>
+                                </constraints>
                                 <state key="normal" image="us"/>
                                 <connections>
                                     <action selector="buttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EHJ-QT-CvB"/>
@@ -43,11 +52,14 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="bJk-5K-YSP" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="GeW-a3-XXy"/>
+                            <constraint firstItem="tIZ-TR-Kud" firstAttribute="height" secondItem="bJk-5K-YSP" secondAttribute="height" id="Qu3-r9-dSz"/>
                             <constraint firstItem="Few-tZ-h1y" firstAttribute="centerX" secondItem="tIZ-TR-Kud" secondAttribute="centerX" id="Sz2-xk-vuv"/>
                             <constraint firstItem="tIZ-TR-Kud" firstAttribute="centerX" secondItem="bJk-5K-YSP" secondAttribute="centerX" id="dHZ-pC-gJF"/>
+                            <constraint firstItem="Few-tZ-h1y" firstAttribute="height" secondItem="tIZ-TR-Kud" secondAttribute="height" id="dtF-d0-HfB"/>
                             <constraint firstItem="tIZ-TR-Kud" firstAttribute="top" secondItem="bJk-5K-YSP" secondAttribute="bottom" constant="20" id="gQe-wG-Gmg"/>
                             <constraint firstItem="bJk-5K-YSP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="iIY-p6-d7X"/>
                             <constraint firstItem="Few-tZ-h1y" firstAttribute="top" secondItem="tIZ-TR-Kud" secondAttribute="bottom" constant="28" id="sao-Gf-aMh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Few-tZ-h1y" secondAttribute="bottom" constant="20" id="wb5-5F-KAf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
