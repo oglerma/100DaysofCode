@@ -59,6 +59,12 @@ class ViewController: UIViewController {
         for label in [label1, label2, label3, label4, label5] {
             label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
             label.heightAnchor.constraint(equalToConstant: 88).isActive = true
+            // TODO: Replace width anchor with leading and trailing
+            
+            // TODO: Use safeAreaLayoutGuide for the first contraints. 
+            
+            // TODO: Make hegiht of our labels equal 1/5 of the main view, minus 10 for the spacing
+            
             
             if let previous = previous {
                 label.topAnchor.constraint(equalTo: previous.bottomAnchor, constant: 10).isActive = true
