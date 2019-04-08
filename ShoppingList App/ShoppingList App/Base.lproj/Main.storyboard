@@ -12,7 +12,7 @@
         <!--ShoppingListTV-->
         <scene sceneID="c8h-Ov-xD0">
             <objects>
-                <tableViewController title="ShoppingListTV" id="4kP-5a-ZOE" sceneMemberID="viewController">
+                <tableViewController title="ShoppingListTV" id="4kP-5a-ZOE" customClass="ShoppingListVC" customModule="ShoppingList_App" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="IAe-6E-DAe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
