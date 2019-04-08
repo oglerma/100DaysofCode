@@ -14,7 +14,12 @@ class ShoppingListVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        // TODO: Add the Add an Item button
+        // TODO: Add Alert ViewController that takes in text
+        // TODO: Display Text From AlertVC into ShoppingListTableView
+        // TODO: Add a Function to start a new list
+        // TODO: Add a title in the Navigation bar
+        // TODO: Add a delete swipe
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -28,6 +33,7 @@ class ShoppingListVC: UITableViewController {
         return cell
     }
  
+    
 
 
 }
