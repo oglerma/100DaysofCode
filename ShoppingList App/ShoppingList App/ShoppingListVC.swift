@@ -14,12 +14,7 @@ class ShoppingListVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO: Add the Add an Item button
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(askForItem))
-        // TODO: Add Alert ViewController that takes in text
-        // TODO: Display Text From AlertVC into ShoppingListTableView
-        // TODO: Add a Function to start a new list
-        // TODO: Add a title in the Navigation bar
         title = "Shopping List"
         // TODO: Add a delete swipe
         makeNewList()
@@ -27,7 +22,7 @@ class ShoppingListVC: UITableViewController {
 
    @objc func askForItem(){
         
-        let ac = UIAlertController(title: "Add and Item", message: nil, preferredStyle: .alert)
+        let ac = UIAlertController(title: "Add an Item", message: nil, preferredStyle: .alert)
         ac.addTextField()
         ac.addAction(UIAlertAction(title: "Add", style: .default) {
             //TODO: Study this more
@@ -51,8 +46,17 @@ class ShoppingListVC: UITableViewController {
     }
     
     
+    // Swipe and delete is already a built in method in tableview
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        // Checks to see if it was swiiped. If it is it will delete where the swipe was
+        // by removing the value inside the cell at indexPath.row of the shoppingListArray.
+        if editingStyle == UITableViewCell.EditingStyle.delete{
+            shoppingListArray.remove(at: indexPath.row)
+        }
+        tableView.reloadData()
+    }
     
-    // Rows and
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shoppingListArray.count
     }
