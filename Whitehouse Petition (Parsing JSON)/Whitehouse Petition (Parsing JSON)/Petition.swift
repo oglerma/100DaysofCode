@@ -11,5 +11,5 @@ import Foundation
 struct Petition: Codable {
     var title: String
     var body: String
-    var signature: String
+    var signatureCount: Int
 }

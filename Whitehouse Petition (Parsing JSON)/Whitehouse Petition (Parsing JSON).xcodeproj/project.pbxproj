@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E9B5B8442260D1A100FC60CB /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B5B8432260D1A100FC60CB /* DetailViewController.swift */; };
 		E9B846F6225F4A8600D871E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B846F5225F4A8600D871E9 /* AppDelegate.swift */; };
 		E9B846FB225F4A8600D871E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9B846F9225F4A8600D871E9 /* Main.storyboard */; };
 		E9B846FD225F4A8700D871E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9B846FC225F4A8700D871E9 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E9B5B8432260D1A100FC60CB /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		E9B846F2225F4A8600D871E9 /* Whitehouse Petition (Parsing JSON).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Whitehouse Petition (Parsing JSON).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9B846F5225F4A8600D871E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9B846FA225F4A8600D871E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				E9B84701225F4A8700D871E9 /* Info.plist */,
 				E9B84707225F54FD00D871E9 /* MainViewController.swift */,
 				E9B84709225F570600D871E9 /* Petition.swift */,
+				E9B5B8432260D1A100FC60CB /* DetailViewController.swift */,
 			);
 			path = "Whitehouse Petition (Parsing JSON)";
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			files = (
 				E9B846F6225F4A8600D871E9 /* AppDelegate.swift in Sources */,
 				E9B8470C225F575F00D871E9 /* Petitions.swift in Sources */,
+				E9B5B8442260D1A100FC60CB /* DetailViewController.swift in Sources */,
 				E9B84708225F54FD00D871E9 /* MainViewController.swift in Sources */,
 				E9B8470A225F570600D871E9 /* Petition.swift in Sources */,
 			);
