@@ -11,14 +11,26 @@ import UIKit
 class MainViewController: UITableViewController {
     
     var petitions = [Petition]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       loadURL()
-
+        loadURL()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(displayWebsiteCredits))
+        
+        
     }
     
+    @objc
+    func displayWebsiteCredits(){
+        let userAC = UIAlertController(title: "Credits",
+                                       message: "The Data provided comes from: \n www.hackingwithswift.com",
+                                       preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "OK", style: .cancel)
+        userAC.addAction(action)
+        present(userAC, animated: true)
+    }
     
     func loadURL(){
         
@@ -43,7 +55,7 @@ class MainViewController: UITableViewController {
         
     }
     
-
+    
     func parse(json: Data) {
         let decoder = JSONDecoder()
         
@@ -53,12 +65,12 @@ class MainViewController: UITableViewController {
         }
     }
     
-
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return petitions.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let petition = petitions[indexPath.row]
@@ -84,5 +96,5 @@ class MainViewController: UITableViewController {
         ac.addAction(action)
         present(ac,animated: true)
     }
- 
+    
 }
