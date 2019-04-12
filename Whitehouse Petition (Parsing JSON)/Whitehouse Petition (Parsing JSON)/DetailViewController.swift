@@ -29,10 +29,21 @@ class DetailViewController: UIViewController {
         <html>
         <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style> body{ font-size: 150%; } </style>
+        <style>
+        body{ font-size: 150%; }
+        </style>
         </head>
         <body>
+        <div style="background-color:lightblue">
+        <h3>\(detailItem.title)</h3>
+        </div>
         \(detailItem.body)
+        <footer>
+        <p>Number of signatures: \(detailItem.signatureCount)</p>
+        <p>Data info:
+        <a href="https://www.hackingwithswift.com/samples/petitions-1.json"> www.hackingwithswift.com </a>
+        </p>
+        </footer>
         </body>
         </html>
         """

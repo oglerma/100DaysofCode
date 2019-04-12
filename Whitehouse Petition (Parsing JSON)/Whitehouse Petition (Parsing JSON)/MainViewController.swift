@@ -4,8 +4,8 @@
 //
 //  Created by Ociel Lerma on 4/11/19.
 //  Copyright © 2019 Ociel Lerma. All rights reserved.
-//
-
+// https://www.ioscreator.com/tutorials/add-search-table-view-ios-tutorial
+// https://www.youtube.com/watch?v=6ZnMXzJ-rKM
 import UIKit
 
 class MainViewController: UITableViewController {
@@ -18,7 +18,18 @@ class MainViewController: UITableViewController {
         loadURL()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(displayWebsiteCredits))
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: #selector(filterWord))
+        // We need to input a word
+        // use the word to filter through the input and only get
+        // put the new filter into an array to use it
+        // display the new filtered list
         
+    }
+    
+    @objc
+    func filterWord(){
+        //Display an Alert controller with a text input type
+        // get the info for
     }
     
     @objc
