@@ -8,30 +8,52 @@
 // https://www.youtube.com/watch?v=6ZnMXzJ-rKM
 import UIKit
 
-class MainViewController: UITableViewController {
+class MainViewController: UITableViewController, UISearchBarDelegate {
     
     var petitions = [Petition]()
+    var searchBar: UISearchBar = UISearchBar()
+    var filteredArray = [Petition]()
+    var isSearching = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadURL()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(displayWebsiteCredits))
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: #selector(filterWord))
-        // We need to input a word
-        // use the word to filter through the input and only get
-        // put the new filter into an array to use it
-        // display the new filtered list
-        
+        addNavigationItems()
     }
-    
-    @objc
-    func filterWord(){
-        //Display an Alert controller with a text input type
-        // get the info for
+    // Navigation Items
+    func addNavigationItems(){
+        
+        let shareCreditsBtn = UIBarButtonItem(barButtonSystemItem: .action,
+                                              target: self,
+                                              action: #selector(displayWebsiteCredits))
+        navigationItem.leftBarButtonItem = shareCreditsBtn
+        addSearchBar()
     }
-    
+    // Search Bar
+    func addSearchBar(){
+        searchBar.searchBarStyle = UISearchBar.Style.prominent
+        searchBar.placeholder = " Search..."
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        searchBar.backgroundImage = UIImage()
+        searchBar.delegate = self
+        navigationItem.titleView = searchBar
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
+    {
+        // MARK: Filter Syntax
+        // Get the Word
+        // Filter the Petittions array for petitions that contain that word
+        // display filtered tableview
+        isSearching = true
+        filteredArray += petitions.filter({ print($0.body.lowercased()); return $0.body.lowercased() == searchBar.text?.lowercased()})
+//        print("This is searcBar.text: \(String(describing: searchBar.text))")
+        print("This is filteredArray: \(filteredArray)")
+//        print("This is petitionsab: \(petitions)")
+        tableView.reloadData()
+    }
+
     @objc
     func displayWebsiteCredits(){
         let userAC = UIAlertController(title: "Credits",
@@ -46,15 +68,12 @@ class MainViewController: UITableViewController {
     func loadURL(){
         
         let urlString: String
-        
         // Switch between tabBarItems
         if navigationController?.tabBarItem.tag == 0{
             urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
         }else{
             urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
         }
-        
-        
         if let url = URL(string: urlString) {
             if let data = try? Data(contentsOf: url) {
                 // we're OK to parse!
@@ -65,8 +84,7 @@ class MainViewController: UITableViewController {
         showError()
         
     }
-    
-    
+
     func parse(json: Data) {
         let decoder = JSONDecoder()
         
@@ -77,16 +95,25 @@ class MainViewController: UITableViewController {
     }
     
     
-    
+    // MARK: Change this to include filtered words
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return petitions.count
+        if isSearching {
+            return filteredArray.count
+        }else{
+            return petitions.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let petition = petitions[indexPath.row]
-        cell.textLabel?.text = petition.title
-        cell.detailTextLabel?.text = petition.body
+        
+        if isSearching {
+            cell.textLabel?.text = filteredArray[indexPath.row].title
+            cell.detailTextLabel?.text = filteredArray[indexPath.row].body
+        }else {
+            cell.textLabel?.text = petitions[indexPath.row].title
+            cell.detailTextLabel?.text = petitions[indexPath.row].body
+        }
         return cell
     }
     
