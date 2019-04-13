@@ -11,7 +11,7 @@ import UIKit
 class MainViewController: UITableViewController, UISearchBarDelegate {
     
     var petitions = [Petition]()
-    var searchBar: UISearchBar = UISearchBar()
+    var customSearchBar: UISearchBar = UISearchBar()
     var filteredArray = [Petition]()
     var isSearching = false
     
@@ -30,27 +30,39 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
         navigationItem.leftBarButtonItem = shareCreditsBtn
         addSearchBar()
     }
-    // Search Bar
+    // SEARCHBAR
     func addSearchBar(){
-        searchBar.searchBarStyle = UISearchBar.Style.prominent
-        searchBar.placeholder = " Search..."
-        searchBar.sizeToFit()
-        searchBar.isTranslucent = false
-        searchBar.backgroundImage = UIImage()
-        searchBar.delegate = self
-        navigationItem.titleView = searchBar
+        customSearchBar.searchBarStyle = UISearchBar.Style.prominent
+        customSearchBar.placeholder = " Search for title..."
+        customSearchBar.sizeToFit()
+        customSearchBar.isTranslucent = false
+        customSearchBar.backgroundImage = UIImage()
+        customSearchBar.delegate = self
+        navigationItem.titleView = customSearchBar
     }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
     {
-        // MARK: Filter Syntax
-        // Get the Word
-        // Filter the Petittions array for petitions that contain that word
-        // display filtered tableview
-        isSearching = true
-        filteredArray += petitions.filter({ print($0.body.lowercased()); return $0.body.lowercased() == searchBar.text?.lowercased()})
-//        print("This is searcBar.text: \(String(describing: searchBar.text))")
-        print("This is filteredArray: \(filteredArray)")
-//        print("This is petitionsab: \(petitions)")
+        print("What is isSearching \(isSearching)")
+        
+        if searchBar.text! == "" {
+            isSearching = false
+            
+        }else{
+            isSearching = true
+            filteredArray = petitions.filter({return $0.title.contains(searchBar.text!)})
+            print("This is filter.count \(filteredArray.count)")
+            print("This is petitions.count \(petitions.count)")
+            print("This is searchBar.text: \(searchBar.text!)")
+        }
+        tableView.reloadData()
+    }
+    
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+        customSearchBar.text = ""
+        isSearching = false
         tableView.reloadData()
     }
 
