@@ -43,24 +43,17 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
     {
-        print("What is isSearching \(isSearching)")
-        
         if searchBar.text! == "" {
             isSearching = false
             
         }else{
             isSearching = true
             filteredArray = petitions.filter({return $0.title.contains(searchBar.text!)})
-            print("This is filter.count \(filteredArray.count)")
-            print("This is petitions.count \(petitions.count)")
-            print("This is searchBar.text: \(searchBar.text!)")
         }
         tableView.reloadData()
     }
     
-    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
         customSearchBar.text = ""
         isSearching = false
         tableView.reloadData()
@@ -110,8 +103,11 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
     // MARK: Change this to include filtered words
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching {
+            print("Inside the first numberOfRowsInSection")
             return filteredArray.count
+            
         }else{
+            print("Inside the Second numberOfRowsInSection")
             return petitions.count
         }
     }
@@ -133,7 +129,11 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
     // Instantiate the ViewController that we are going to and pass it the selected Cell.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
-        vc.detailItem = petitions[indexPath.row]
+        if isSearching{
+            vc.detailItem = filteredArray[indexPath.row]
+        } else{
+            vc.detailItem = petitions[indexPath.row]
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
     
