@@ -10,6 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    /***************************************************
+     * ADDING OUR VIEWS AS COMPUTED PROPERTIES
+     * I.E. (CLUESLABEL, ANSWERSLABEL, CURRENTANSWER, AND SCORELABEL)
+     ***************************************************/
+
     var cluesLabel: UILabel = {
         var cluesLbl = UILabel()
         cluesLbl.translatesAutoresizingMaskIntoConstraints = false
@@ -26,12 +31,18 @@ class ViewController: UIViewController {
         answerLbl.font = UIFont.systemFont(ofSize: 24)
         answerLbl.text = "ANSWERS"
         answerLbl.numberOfLines = 0
+        answerLbl.textAlignment = .right
         answerLbl.backgroundColor = #colorLiteral(red: 0.4992665052, green: 0.777181685, blue: 1, alpha: 1)
         return answerLbl
     }()
     
     var currentAnswer: UITextField = {
         var currentAns = UITextField()
+        currentAns.translatesAutoresizingMaskIntoConstraints = false
+        currentAns.placeholder = "Tap letters to guess"
+        currentAns.textAlignment = .center
+        currentAns.font = UIFont.systemFont(ofSize: 44)
+        currentAns.isUserInteractionEnabled = false
         return currentAns
     }()
     
@@ -43,6 +54,30 @@ class ViewController: UIViewController {
         return scoreLbl
     }()
     
+    /***************************************************
+     * SUBMIT, CLEAR AND BUTTONSVIEW BUTTONS
+     ***************************************************/
+    let submit: UIButton = {
+        let subBtn = UIButton()
+        subBtn.translatesAutoresizingMaskIntoConstraints = false
+        subBtn.setTitle("SUBMIT", for:  .normal)
+        return subBtn
+    }()
+    
+    let clear: UIButton = {
+        let clearBtn = UIButton()
+        clearBtn.translatesAutoresizingMaskIntoConstraints = false
+        clearBtn.setTitle("CLEAR", for: .normal)
+        return clearBtn
+    }()
+    
+    let buttonsView: UIView = {
+        let btnsView = UIView()
+        btnsView.translatesAutoresizingMaskIntoConstraints = false
+        return btnsView
+    }()
+    
+    // ARRAY OF LETTER BUTTONS
     var letterButtons = [UIButton]()
     
     
@@ -56,6 +91,9 @@ class ViewController: UIViewController {
         view.addSubview(scoreLabel)
         view.addSubview(cluesLabel)
         view.addSubview(answersLabel)
+        view.addSubview(currentAnswer)
+        view.addSubview(submit)
+        view.addSubview(clear)
     }
     
     func addContraints(){
@@ -68,7 +106,21 @@ class ViewController: UIViewController {
             answersLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
             answersLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -100),
             answersLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.4, constant: -100),
-            answersLabel.heightAnchor.constraint(equalTo: cluesLabel.heightAnchor)
+            answersLabel.heightAnchor.constraint(equalTo: cluesLabel.heightAnchor),
+            currentAnswer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            currentAnswer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            currentAnswer.topAnchor.constraint(equalTo: cluesLabel.bottomAnchor, constant: 20),
+            submit.topAnchor.constraint(equalTo: currentAnswer.bottomAnchor),
+            submit.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -100),
+            submit.heightAnchor.constraint(equalToConstant: 44),
+            clear.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100),
+            clear.centerYAnchor.constraint(equalTo: submit.centerYAnchor),
+            clear.heightAnchor.constraint(equalToConstant: 44),
+            buttonsView.widthAnchor.constraint(equalToConstant: 750),
+            buttonsView.heightAnchor.constraint(equalToConstant: 320),
+            buttonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            buttonsView.topAnchor.constraint(equalTo: submit.bottomAnchor, constant: 20),
+            buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20)
             ])}
 
     
