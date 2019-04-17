@@ -15,17 +15,18 @@ class ViewController: UIViewController {
      * I.E. (CLUESLABEL, ANSWERSLABEL, CURRENTANSWER, AND SCORELABEL)
      ***************************************************/
 
-    var cluesLabel: UILabel = {
+    let cluesLabel: UILabel = {
         var cluesLbl = UILabel()
         cluesLbl.translatesAutoresizingMaskIntoConstraints = false
         cluesLbl.font = UIFont.systemFont(ofSize: 24)
         cluesLbl.text = "CLUES"
         cluesLbl.backgroundColor = #colorLiteral(red: 0.60072124, green: 1, blue: 0.3980069458, alpha: 1)
         cluesLbl.numberOfLines = 0
+        cluesLbl.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         return cluesLbl
     }()
     
-    var answersLabel: UILabel = {
+    let answersLabel: UILabel = {
         var answerLbl = UILabel()
         answerLbl.translatesAutoresizingMaskIntoConstraints = false
         answerLbl.font = UIFont.systemFont(ofSize: 24)
@@ -33,10 +34,11 @@ class ViewController: UIViewController {
         answerLbl.numberOfLines = 0
         answerLbl.textAlignment = .right
         answerLbl.backgroundColor = #colorLiteral(red: 0.4992665052, green: 0.777181685, blue: 1, alpha: 1)
+        answerLbl.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         return answerLbl
     }()
     
-    var currentAnswer: UITextField = {
+    let currentAnswer: UITextField = {
         var currentAns = UITextField()
         currentAns.translatesAutoresizingMaskIntoConstraints = false
         currentAns.placeholder = "Tap letters to guess"
@@ -46,7 +48,7 @@ class ViewController: UIViewController {
         return currentAns
     }()
     
-    var scoreLabel: UILabel = {
+    let scoreLabel: UILabel = {
         var scoreLbl = UILabel()
         scoreLbl.translatesAutoresizingMaskIntoConstraints = false
         scoreLbl.textAlignment = .right
@@ -58,14 +60,14 @@ class ViewController: UIViewController {
      * SUBMIT, CLEAR AND BUTTONSVIEW BUTTONS
      ***************************************************/
     let submit: UIButton = {
-        let subBtn = UIButton()
+        let subBtn = UIButton(type: .system)
         subBtn.translatesAutoresizingMaskIntoConstraints = false
         subBtn.setTitle("SUBMIT", for:  .normal)
         return subBtn
     }()
     
     let clear: UIButton = {
-        let clearBtn = UIButton()
+        let clearBtn = UIButton(type: .system)
         clearBtn.translatesAutoresizingMaskIntoConstraints = false
         clearBtn.setTitle("CLEAR", for: .normal)
         return clearBtn
@@ -74,6 +76,7 @@ class ViewController: UIViewController {
     let buttonsView: UIView = {
         let btnsView = UIView()
         btnsView.translatesAutoresizingMaskIntoConstraints = false
+        btnsView.backgroundColor = #colorLiteral(red: 0.9540640712, green: 1, blue: 0.3262510002, alpha: 1)
         return btnsView
     }()
     
@@ -94,6 +97,7 @@ class ViewController: UIViewController {
         view.addSubview(currentAnswer)
         view.addSubview(submit)
         view.addSubview(clear)
+        view.addSubview(buttonsView)
     }
     
     func addContraints(){
@@ -122,15 +126,28 @@ class ViewController: UIViewController {
             buttonsView.topAnchor.constraint(equalTo: submit.bottomAnchor, constant: 20),
             buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20)
             ])}
-
+    
+    func make20Buttons(){
+        let width = 150
+        let height = 80
+        for row in 0..<4 {
+            for column in 0..<5 {
+                let letterButton = UIButton(type: .system)
+                letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
+                letterButton.setTitle("WWW", for: .normal)
+                let frame = CGRect(x: column * width, y: row * height, width: width, height: height)
+                letterButton.frame = frame
+                buttonsView.addSubview(letterButton)
+                letterButtons.append(letterButton)
+            }
+        }
+    }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         addSubviews()
         addContraints()
-        
-        super.viewDidLoad()
-
-
+        make20Buttons()
     }
 
 
