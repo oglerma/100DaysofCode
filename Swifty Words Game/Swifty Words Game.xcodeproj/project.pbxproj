@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E9456E292266DDB800816479 /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = E9456E272266DDB800816479 /* level1.txt */; };
+		E9456E2A2266DDB800816479 /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = E9456E282266DDB800816479 /* level2.txt */; };
 		E9B5B8522262DD2C00FC60CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B5B8512262DD2C00FC60CB /* AppDelegate.swift */; };
 		E9B5B8542262DD2C00FC60CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B5B8532262DD2C00FC60CB /* ViewController.swift */; };
 		E9B5B8572262DD2C00FC60CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9B5B8552262DD2C00FC60CB /* Main.storyboard */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E9456E272266DDB800816479 /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
+		E9456E282266DDB800816479 /* level2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
 		E9B5B84E2262DD2C00FC60CB /* Swifty Words Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swifty Words Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9B5B8512262DD2C00FC60CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9B5B8532262DD2C00FC60CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 				E9B5B85A2262DD2F00FC60CB /* LaunchScreen.storyboard */,
 				E9B5B85D2262DD2F00FC60CB /* Info.plist */,
 				E9B5B8632264409600FC60CB /* AnchorsExtension.swift */,
+				E9456E272266DDB800816479 /* level1.txt */,
+				E9456E282266DDB800816479 /* level2.txt */,
 			);
 			path = "Swifty Words Game";
 			sourceTree = "<group>";
@@ -125,7 +131,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9456E2A2266DDB800816479 /* level2.txt in Resources */,
 				E9B5B85C2262DD2F00FC60CB /* LaunchScreen.storyboard in Resources */,
+				E9456E292266DDB800816479 /* level1.txt in Resources */,
 				E9B5B8592262DD2F00FC60CB /* Assets.xcassets in Resources */,
 				E9B5B8572262DD2C00FC60CB /* Main.storyboard in Resources */,
 			);
