@@ -192,12 +192,11 @@ class ViewController: UIViewController {
     }
     
     @objc func submitTapped(_ sender: UIButton){
-        guard let answerText = currentAnswer.text else {
-            // Show wrong answer
-            // Clear The board
-            return
-        }
+        guard let answerText = currentAnswer.text else {return}
+        
+        
         if let solutionPosition = solutions.firstIndex(of: answerText){
+            print(" i am inside the let statment")
             activatedButtons.removeAll()
             var splitAnswers = answersLabel.text?.components(separatedBy: "\n")
             splitAnswers?[solutionPosition] = answerText
@@ -209,7 +208,28 @@ class ViewController: UIViewController {
                 let ac = UIAlertController(title: "Well Done!", message: "Are you ready fo rthe next level?", preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
             }
+        }else {
+            // Show wrong answer
+            wrongAnswerAlert()
+            // Clear The board (Same logic as in ClearTapped()
+            currentAnswer.text = ""
+            for button in activatedButtons {
+                button.isHidden = false
+            }
+            activatedButtons.removeAll()
         }
+    }
+    
+    func wrongAnswerAlert(){
+        let ac = UIAlertController(title: "Wrong",
+                                   message: "Sorry, try again",
+                                   preferredStyle: .alert)
+        let actionBtn = UIAlertAction(title: "OK", style: .cancel){
+            (action) in
+            self.score -= 1
+        }
+        ac.addAction(actionBtn)
+        present(ac, animated: true)
     }
     
     func levelUp(action: UIAlertAction){
