@@ -20,7 +20,6 @@ class ViewController: UIViewController {
         cluesLbl.translatesAutoresizingMaskIntoConstraints = false
         cluesLbl.font = UIFont.systemFont(ofSize: 24)
         cluesLbl.text = "CLUES"
-        cluesLbl.backgroundColor = #colorLiteral(red: 0.60072124, green: 1, blue: 0.3980069458, alpha: 1)
         cluesLbl.numberOfLines = 0
         cluesLbl.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         return cluesLbl
@@ -33,7 +32,6 @@ class ViewController: UIViewController {
         answerLbl.text = "ANSWERS"
         answerLbl.numberOfLines = 0
         answerLbl.textAlignment = .right
-        answerLbl.backgroundColor = #colorLiteral(red: 0.4992665052, green: 0.777181685, blue: 1, alpha: 1)
         answerLbl.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         return answerLbl
     }()
@@ -63,7 +61,18 @@ class ViewController: UIViewController {
         let subBtn = UIButton(type: .system)
         subBtn.translatesAutoresizingMaskIntoConstraints = false
         subBtn.setTitle("SUBMIT", for:  .normal)
+        subBtn.setTitleColor(UIColor.white, for: .normal)
         subBtn.addTarget(self, action: #selector(submitTapped), for: .touchUpInside)
+        // Make a nice butotn
+        subBtn.layer.cornerRadius  = 25
+        subBtn.layer.borderWidth   = 3.0
+        subBtn.backgroundColor     = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        subBtn.layer.borderColor   = UIColor.darkGray.cgColor
+        // Shadow
+        subBtn.layer.shadowOffset  = CGSize(width: 0.0, height: 6.0)
+        subBtn.layer.shadowRadius  = 8
+        subBtn.clipsToBounds       = true
+        subBtn.layer.masksToBounds = false
         return subBtn
     }()
     
@@ -71,14 +80,24 @@ class ViewController: UIViewController {
         let clearBtn = UIButton(type: .system)
         clearBtn.translatesAutoresizingMaskIntoConstraints = false
         clearBtn.setTitle("CLEAR", for: .normal)
+        clearBtn.setTitleColor(UIColor.white, for: .normal)
         clearBtn.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
+        // Make a nice butotn
+        clearBtn.layer.cornerRadius  = 25
+        clearBtn.layer.borderWidth   = 3.0
+        clearBtn.backgroundColor     = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        clearBtn.layer.borderColor   = UIColor.darkGray.cgColor
+        // Shadow
+        clearBtn.layer.shadowOffset  = CGSize(width: 0.0, height: 6.0)
+        clearBtn.layer.shadowRadius  = 8
+        clearBtn.clipsToBounds       = true
+        clearBtn.layer.masksToBounds = false
         return clearBtn
     }()
     
     let buttonsView: UIView = {
         let btnsView = UIView()
         btnsView.translatesAutoresizingMaskIntoConstraints = false
-        btnsView.backgroundColor = #colorLiteral(red: 0.9540640712, green: 1, blue: 0.3262510002, alpha: 1)
         return btnsView
     }()
     
@@ -130,11 +149,13 @@ class ViewController: UIViewController {
             currentAnswer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             currentAnswer.topAnchor.constraint(equalTo: cluesLabel.bottomAnchor, constant: 20),
             submit.topAnchor.constraint(equalTo: currentAnswer.bottomAnchor),
-            submit.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -100),
+            submit.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -200),
             submit.heightAnchor.constraint(equalToConstant: 44),
-            clear.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 100),
+            submit.widthAnchor.constraint(equalToConstant: 200),
+            clear.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 200),
             clear.centerYAnchor.constraint(equalTo: submit.centerYAnchor),
             clear.heightAnchor.constraint(equalToConstant: 44),
+            clear.widthAnchor.constraint(equalToConstant: 200),
             buttonsView.widthAnchor.constraint(equalToConstant: 750),
             buttonsView.heightAnchor.constraint(equalToConstant: 320),
             buttonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -149,7 +170,6 @@ class ViewController: UIViewController {
             for column in 0..<5 {
                 let letterButton = UIButton(type: .system)
                 letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
-                letterButton.setTitle("WWW", for: .normal)
                 letterButton.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
                 let frame = CGRect(x: column * width, y: row * height, width: width, height: height)
                 letterButton.frame = frame
@@ -172,7 +192,11 @@ class ViewController: UIViewController {
     }
     
     @objc func submitTapped(_ sender: UIButton){
-        guard let answerText = currentAnswer.text else { return}
+        guard let answerText = currentAnswer.text else {
+            // Show wrong answer
+            // Clear The board
+            return
+        }
         if let solutionPosition = solutions.firstIndex(of: answerText){
             activatedButtons.removeAll()
             var splitAnswers = answersLabel.text?.components(separatedBy: "\n")
@@ -182,7 +206,7 @@ class ViewController: UIViewController {
             score += 1
             
             if score % 7 == 0 {
-                let ac = UIAlertController(title: "Well Done!", message: "Are you ready fo rthe next lever?", preferredStyle: .alert)
+                let ac = UIAlertController(title: "Well Done!", message: "Are you ready fo rthe next level?", preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
             }
         }
