@@ -113,6 +113,8 @@ class ViewController: UIViewController {
         }
     }
     var level = 1
+    var completedAnswer = 0
+    
     
     
     override func loadView() {
@@ -195,29 +197,43 @@ class ViewController: UIViewController {
         guard let answerText = currentAnswer.text else {return}
         
         
-        if let solutionPosition = solutions.firstIndex(of: answerText){
-            print(" i am inside the let statment")
-            activatedButtons.removeAll()
-            var splitAnswers = answersLabel.text?.components(separatedBy: "\n")
-            splitAnswers?[solutionPosition] = answerText
-            answersLabel.text = splitAnswers?.joined(separator: "\n")
-            currentAnswer.text = ""
-            score += 1
-            
-            if score % 7 == 0 {
-                let ac = UIAlertController(title: "Well Done!", message: "Are you ready fo rthe next level?", preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
+        if answerText != "" {
+            if let solutionPosition = solutions.firstIndex(of: answerText){
+                print(" i am inside the let statment")
+                activatedButtons.removeAll()
+                var splitAnswers = answersLabel.text?.components(separatedBy: "\n")
+                splitAnswers?[solutionPosition] = answerText
+                answersLabel.text = splitAnswers?.joined(separator: "\n")
+                currentAnswer.text = ""
+                score += 1
+                completedAnswer += 1
+                
+                if completedAnswer == 7 {
+                    startNewGame()
+                }
+            }else {
+                // Show wrong answer
+                wrongAnswerAlert()
+                // Clear The board (Same logic as in ClearTapped()
+                currentAnswer.text = ""
+                for button in activatedButtons {
+                    button.isHidden = false
+                }
+                activatedButtons.removeAll()
             }
-        }else {
-            // Show wrong answer
-            wrongAnswerAlert()
-            // Clear The board (Same logic as in ClearTapped()
-            currentAnswer.text = ""
-            for button in activatedButtons {
-                button.isHidden = false
-            }
-            activatedButtons.removeAll()
         }
+        
+    }
+    
+    // START ANOTHER GAME
+    func startNewGame(){
+        if level == 2 {
+            level = 1
+        }
+        let ac = UIAlertController(title: "Well Done!", message: "Are you ready fo rthe next level?", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Nah", style: .cancel))
+        ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
+        present(ac, animated: true)
     }
     
     func wrongAnswerAlert(){
@@ -287,10 +303,3 @@ class ViewController: UIViewController {
     }
 
 }
-
-
-//TODO: LEARN ABOUT .joined .firstIndex(of) .trimmingCharacters .replacingOccurances .components .removeAll(keepingCapacity)
-
-//TODO: LEARN ABOUT PROPERTY OBSERVESRS
-
-//TODO: LEARN ABOUT addTarget() enumerated() joined() replacingOccurrances()
