@@ -79,14 +79,18 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
         }else{
             urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
         }
-        if let url = URL(string: urlString) {
-            if let data = try? Data(contentsOf: url) {
-                // we're OK to parse!
-                parse(json: data)
-                return 
+        
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            if let url = URL(string: urlString) {
+                if let data = try? Data(contentsOf: url) {
+                    // we're OK to parse!
+                    self?.parse(json: data)
+                    return
+                }
             }
+            self?.showError()
         }
-        showError()
+        
         
     }
 
@@ -95,7 +99,10 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
         
         if let jsonPetitions = try? decoder.decode(Petitions.self, from: json) {
             petitions = jsonPetitions.results
-            tableView.reloadData()
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
+            }
+           
         }
     }
     
@@ -139,12 +146,15 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
     
     
     func showError(){
-        let ac = UIAlertController(title: "Loading error",
-                                   message: "There was a problem loading your data;\n please try again ",
-                                   preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel)
-        ac.addAction(action)
-        present(ac,animated: true)
+        DispatchQueue.main.async { [weak self] in
+            let ac = UIAlertController(title: "Loading error",
+                                       message: "There was a problem loading your data;\n please try again ",
+                                       preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .cancel)
+            ac.addAction(action)
+            self?.present(ac,animated: true)
+        }
+
     }
     
 }
