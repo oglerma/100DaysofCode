@@ -18,7 +18,7 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadURL()
+        performSelector(inBackground: #selector(fetchJSON), with: nil)
         addNavigationItems()
     }
     // Navigation Items
@@ -70,26 +70,27 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
         present(userAC, animated: true)
     }
     
-    func loadURL(){
+    @objc func fetchJSON(){
         
         let urlString: String
         // Switch between tabBarItems
-        if navigationController?.tabBarItem.tag == 0{
+        if navigationController?.tabBarItem.tag == 0 {
             urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
         }else{
             urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
         }
         
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             if let url = URL(string: urlString) {
                 if let data = try? Data(contentsOf: url) {
                     // we're OK to parse!
-                    self?.parse(json: data)
+                    parse(json: data)
                     return
                 }
             }
-            self?.showError()
-        }
+            // This function has UI so it has to run in the main thread not
+            // in a background thread.
+            performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
+
         
         
     }
@@ -99,10 +100,11 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
         
         if let jsonPetitions = try? decoder.decode(Petitions.self, from: json) {
             petitions = jsonPetitions.results
-            DispatchQueue.main.async { [weak self] in
-                self?.tableView.reloadData()
-            }
-           
+            // It is not OK do do UI work in a background thread.
+            // For that reason we are pushing the code to the main queue.
+            tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
+        } else {
+            performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
         }
     }
     
@@ -145,16 +147,13 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
     }
     
     
-    func showError(){
-        DispatchQueue.main.async { [weak self] in
+    @objc func showError(){
             let ac = UIAlertController(title: "Loading error",
                                        message: "There was a problem loading your data;\n please try again ",
                                        preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .cancel)
             ac.addAction(action)
-            self?.present(ac,animated: true)
+            present(ac,animated: true)
         }
-
-    }
     
 }
