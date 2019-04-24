@@ -183,7 +183,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadLevel()
+        performSelector(inBackground: #selector(loadLevel), with: nil)
     }
     
     @objc func letterTapped(_ sender: UIButton){
@@ -266,12 +266,12 @@ class ViewController: UIViewController {
         activatedButtons.removeAll()
         
     }
+    // Load Level Variables
+    var clueString = ""
+    var solutionString = ""
+    var letterBits = [String]()
     
-    func loadLevel() {
-        var clueString = ""
-        var solutionString = ""
-        var letterBits = [String]()
-        
+    @objc func loadLevel() {
         if let levelFileURL = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
             if let levelContents = try? String(contentsOf: levelFileURL){
                 var lines = levelContents.components(separatedBy: "\n")
@@ -291,6 +291,11 @@ class ViewController: UIViewController {
                 }
             }
         }
+        performSelector(onMainThread: #selector(updateUIAfterLoadingLevel), with: nil, waitUntilDone: false)
+        
+    }
+    
+    @objc func updateUIAfterLoadingLevel(){
         cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
         answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
         letterButtons.shuffle()
