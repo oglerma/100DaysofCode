@@ -15,21 +15,26 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         title = "Storm Viewer"
         navigationController?.navigationBar.prefersLargeTitles = true
+        performSelector(inBackground: #selector(fetchImages), with: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action , target: self, action: #selector(shareApp))
         
+        
+    }
+    
+    // MARK: Project 9 (Challenge 1)
+    // Fetch images in background thread
+    @objc func fetchImages() {
         let fm = FileManager.default
         let path = Bundle.main.resourcePath!
         let items = try! fm.contentsOfDirectory(atPath: path).sorted()
         
-
         for item in items {
             if item.hasPrefix("nssl"){
                 pictures.append(item)
             }
         }
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action , target: self, action: #selector(shareApp))
-        
-        
+        // Reload tableview on the main thread and not in the background thread.
+        tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
     }
     
     @objc func shareApp() {
