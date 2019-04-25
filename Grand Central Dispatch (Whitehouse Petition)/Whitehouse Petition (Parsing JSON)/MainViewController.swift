@@ -6,12 +6,22 @@
 //  Copyright © 2019 Ociel Lerma. All rights reserved.
 // https://www.ioscreator.com/tutorials/add-search-table-view-ios-tutorial
 // https://www.youtube.com/watch?v=6ZnMXzJ-rKM
+// https://www.swiftbysundell.com/posts/a-deep-dive-into-grand-central-dispatch-in-swift
+
 import UIKit
 
 class MainViewController: UITableViewController, UISearchBarDelegate {
     
     var petitions = [Petition]()
-    var customSearchBar: UISearchBar = UISearchBar()
+    var customSearchBar: UISearchBar = {
+        var custSB = UISearchBar()
+        custSB.searchBarStyle = UISearchBar.Style.prominent
+        custSB.placeholder = " Search for title..."
+        custSB.sizeToFit()
+        custSB.isTranslucent = false
+        custSB.backgroundImage = UIImage()
+        return custSB
+    }()
     var filteredArray = [Petition]()
     var isSearching = false
     
@@ -32,26 +42,32 @@ class MainViewController: UITableViewController, UISearchBarDelegate {
     }
     // SEARCHBAR
     func addSearchBar(){
-        customSearchBar.searchBarStyle = UISearchBar.Style.prominent
-        customSearchBar.placeholder = " Search for title..."
-        customSearchBar.sizeToFit()
-        customSearchBar.isTranslucent = false
-        customSearchBar.backgroundImage = UIImage()
         customSearchBar.delegate = self
         navigationItem.titleView = customSearchBar
     }
     
+    private var pendingRequestWorkItem: DispatchWorkItem?
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String)
     {
-        if searchBar.text! == "" {
-            isSearching = false
+        pendingRequestWorkItem?.cancel()
+        
+        let requestWorkItem = DispatchWorkItem{
+            [weak self] in
+            if searchBar.text! == "" {
+                self?.isSearching = false
+                
+            }else{
+                self?.isSearching = true
+                self?.filteredArray = (self?.petitions.filter({return $0.title.contains(searchBar.text!)}))!
+            }
             
-        }else{
-            isSearching = true
-            filteredArray = petitions.filter({return $0.title.contains(searchBar.text!)})
         }
+        pendingRequestWorkItem = requestWorkItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250),
+                                      execute: requestWorkItem)
         tableView.reloadData()
     }
+    
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         customSearchBar.text = ""
