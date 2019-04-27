@@ -9,16 +9,25 @@
 import UIKit
 
 class GameViewController: UIViewController {
+    
+    var hangmanPictures = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+        performSelector(inBackground: #selector(loadImages), with: nil)
     }
     
     // TODO: Load images into a string array (use performSelector for background threading)
-    private func loadImages(){
-        
+    @objc private func loadImages(){
         let fm = FileManager.default
+        let path = Bundle.main.resourcePath!
+        let items = try! fm.contentsOfDirectory(atPath: path)
+        for item in items {
+            if item.hasPrefix("pic"){
+                hangmanPictures.append(item)
+                print(hangmanPictures)
+            }
+        }
     }
     // TODO: Set anchors for the images.
     // TODO: Get File or get data from a website that has words (use .userInteractive for our Deque)
