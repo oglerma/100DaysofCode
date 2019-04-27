@@ -13,18 +13,24 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .green
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // TODO: Load images into a string array (use performSelector for background threading)
+    private func loadImages(){
+        
+        let fm = FileManager.default
     }
-    */
-
+    // TODO: Set anchors for the images.
+    // TODO: Get File or get data from a website that has words (use .userInteractive for our Deque)
+    // TODO: Get a random word for user to guess
+    // TODO: Make empty underscores (possibly UILabels or Textfield) where words appears after being guessed.
+    // TOOD: Set the number of underscore labels with the correct amount based on the right answer.
+    // TODO: Set anchors labels, below the image.
+    // TODO: Make Letter Buttons using possibly the entire abc's
+    // TODO: Set anchors for the Letter buttons
+    // TODO: LOGIC of the game. Compare the user input answer with each letter in the answer and display
+    //       them in the view if they are correct.
+    // TODO: Iterate through the next picture if the user gets it wrong.
+    // TOOD: When user wins show a You WON screen with a button to start again. (Possibliy include a happy
+    //       hangman gif. 😃
 }
