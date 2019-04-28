@@ -17,28 +17,9 @@ class GameViewController: UIViewController {
         hmImg.image = UIImage(named: "pic1")
         return hmImg
     }()
+    
+    
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .green
-        
-        performSelector(inBackground: #selector(loadImages), with: nil)
-        view.addSubview(hangmanImage)
-        
-        hangmanImage.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                            leading: nil,
-                            bottom: nil,
-                            trailing: nil,
-                            centerXaxis: view.centerXAnchor,
-                            centerYaxis: nil,
-                            padding:.init(top: 40, left: 0, bottom: 0, right: 0),
-                            size: .init(width: 200, height: 200))
-        
-        
-    
-    }
-    
-    
     // TODO: Load images into a string array (use performSelector for background threading)
     @objc private func loadImages(){
         let fm = FileManager.default
@@ -51,6 +32,35 @@ class GameViewController: UIViewController {
             }
         }
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        performSelector(inBackground: #selector(loadImages), with: nil)
+        
+        addViews()
+        addAnchors()
+        
+
+    
+    }
+    private func addViews(){
+        view.addSubview(hangmanImage)
+        
+    }
+    private func addAnchors(){
+        hangmanImage.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                            leading: nil,
+                            bottom: nil,
+                            trailing: nil,
+                            centerXaxis: view.centerXAnchor,
+                            centerYaxis: nil,
+                            padding:.init(top: 40, left: 0, bottom: 0, right: 0),
+                            size: .init(width: 200, height: 200))
+        
+    }
+    
+
     // TODO: Set anchors for the images.
     // TODO: Get File or get data from a website that has words (use .userInteractive for our Deque)
     // TODO: Get a random word for user to guess
