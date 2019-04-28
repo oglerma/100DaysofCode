@@ -11,6 +11,11 @@ import UIKit
 class GameViewController: UIViewController {
     
     var hangmanPictures = [String]()
+    
+    var hangmanImage: UIImage = {
+        var hmImg = UIImage()
+        return hmImg
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
