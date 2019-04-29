@@ -11,8 +11,16 @@ import UIKit
 class GameViewController: UIViewController {
     
     var hangmanPictures = [String]()
+    var correctWord_underscore = [String]()
     var correctWord_random = ""
     var allWords = [String]()
+    
+    var answerUITextField: UITextField = {
+        let answerUItxtField = UITextField()
+        answerUItxtField.isUserInteractionEnabled = false
+        answerUItxtField.textAlignment = .center
+        return answerUItxtField
+    }()
     
     
     
@@ -37,7 +45,7 @@ class GameViewController: UIViewController {
         }
     }
     
-     @objc private func loadWordList(){
+    private func loadWordList(){
         if let wordsFileURL = Bundle.main.url(forResource: "words", withExtension: "txt"){
             if let data = try? String(contentsOf: wordsFileURL) {
                 allWords.append(contentsOf: data.components(separatedBy: "\n"))
@@ -49,13 +57,14 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         performSelector(inBackground: #selector(loadImages), with: nil)
-        performSelector(inBackground: #selector(loadWordList), with: nil)
+        loadWordList()
         addViews()
         addAnchors()
+        startGame()
     }
     
     private func addViews(){
-        view.addSubviews(hangmanImage)
+        view.addSubviews(hangmanImage, answerUITextField)
         
     }
     private func addAnchors(){
@@ -67,12 +76,37 @@ class GameViewController: UIViewController {
                             centerYaxis: nil,
                             padding:.init(top: 40, left: 0, bottom: 0, right: 0),
                             size: .init(width: 200, height: 200))
+        answerUITextField.anchor(top: hangmanImage.bottomAnchor,
+                                 leading: view.leadingAnchor,
+                                 bottom: nil,
+                                 trailing: view.trailingAnchor,
+                                 centerXaxis: nil,
+                                 centerYaxis: nil,
+                                 padding: .init(top: 10, left: 15, bottom: 0, right: 15),
+                                 size: .init(width: 0, height: 30))
+        
+    }
+    
+    func createUnderscoreForGuessing(){
+        let underScore = "⏤ "
+        for letter in correctWord_random {
+            correctWord_underscore.append(underScore)
+            answerUITextField.text! += underScore
+            print(letter)
+        }
+        print(correctWord_underscore)
+        
+    }
+    
+    func startGame(){
+        correctWord_random = allWords.randomElement() ?? "Turtle"
+        createUnderscoreForGuessing()
+        
+        
         
     }
     
 
-    // TODO: Get File or get data from a website that has words (use .userInteractive for our Deque)
-    // TODO: Get a random word for user to guess
     // TODO: Make empty underscores (possibly UILabels or Textfield) where words appears after being guessed.
     // TOOD: Set the number of underscore labels with the correct amount based on the right answer.
     // TODO: Set anchors labels, below the image.
