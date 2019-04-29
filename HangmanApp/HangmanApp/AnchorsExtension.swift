@@ -55,4 +55,9 @@ extension UIView {
             self.heightAnchor.constraint(equalToConstant: size.height).isActive = true
         }
     }
+    
+    // One function to add all the subviews.
+    func addSubviews(_ views: UIView...){
+        views.forEach({addSubview($0)})
+    }
 }

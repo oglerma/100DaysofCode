@@ -11,6 +11,10 @@ import UIKit
 class GameViewController: UIViewController {
     
     var hangmanPictures = [String]()
+    var correctWord_random = ""
+    var allWords = [String]()
+    
+    
     
     var hangmanImage: UIImageView = {
         var hmImg = UIImageView()
@@ -28,7 +32,15 @@ class GameViewController: UIViewController {
         for item in items {
             if item.hasPrefix("pic"){
                 hangmanPictures.append(item)
-                print(hangmanPictures)
+                
+            }
+        }
+    }
+    
+     @objc private func loadWordList(){
+        if let wordsFileURL = Bundle.main.url(forResource: "words", withExtension: "txt"){
+            if let data = try? String(contentsOf: wordsFileURL) {
+                allWords.append(contentsOf: data.components(separatedBy: "\n"))
             }
         }
     }
@@ -37,15 +49,13 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         performSelector(inBackground: #selector(loadImages), with: nil)
-        
+        performSelector(inBackground: #selector(loadWordList), with: nil)
         addViews()
         addAnchors()
-        
-
-    
     }
+    
     private func addViews(){
-        view.addSubview(hangmanImage)
+        view.addSubviews(hangmanImage)
         
     }
     private func addAnchors(){
@@ -61,7 +71,6 @@ class GameViewController: UIViewController {
     }
     
 
-    // TODO: Set anchors for the images.
     // TODO: Get File or get data from a website that has words (use .userInteractive for our Deque)
     // TODO: Get a random word for user to guess
     // TODO: Make empty underscores (possibly UILabels or Textfield) where words appears after being guessed.
