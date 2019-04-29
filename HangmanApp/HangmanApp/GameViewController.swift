@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     var correctWord_underscore = [String]()
     var correctWord_random = ""
     var allWords = [String]()
+    var letterBtns = [UIButton]()
     
     var answerUITextField: UITextField = {
         let answerUItxtField = UITextField()

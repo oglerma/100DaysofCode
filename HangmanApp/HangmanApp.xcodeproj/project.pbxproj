@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		376FD5C02277BC0D0077E5D8 /* pic6.png in Resources */ = {isa = PBXBuildFile; fileRef = 376FD5BF2277BC0D0077E5D8 /* pic6.png */; };
 		378CF15A22717C4600172356 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378CF15922717C4600172356 /* AppDelegate.swift */; };
 		378CF15F22717C4600172356 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 378CF15D22717C4600172356 /* Main.storyboard */; };
 		378CF16122717C4800172356 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 378CF16022717C4800172356 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		376FD5BF2277BC0D0077E5D8 /* pic6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic6.png; sourceTree = "<group>"; };
 		378CF15622717C4600172356 /* HangmanApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HangmanApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		378CF15922717C4600172356 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		378CF15E22717C4600172356 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				378CF16D22717C6700172356 /* pic3.png */,
 				378CF16E22717C6800172356 /* pic4.png */,
 				378CF16F22717C6800172356 /* pic5.png */,
+				376FD5BF2277BC0D0077E5D8 /* pic6.png */,
 				E96C7F2D227575BC0081269E /* words.txt */,
 				378CF16222717C4800172356 /* LaunchScreen.storyboard */,
 				378CF16522717C4800172356 /* Info.plist */,
@@ -150,6 +153,7 @@
 				E96C7F2E227575BC0081269E /* words.txt in Resources */,
 				378CF17422717C6800172356 /* pic5.png in Resources */,
 				378CF16122717C4800172356 /* Assets.xcassets in Resources */,
+				376FD5C02277BC0D0077E5D8 /* pic6.png in Resources */,
 				378CF17222717C6800172356 /* pic3.png in Resources */,
 				378CF15F22717C4600172356 /* Main.storyboard in Resources */,
 			);
