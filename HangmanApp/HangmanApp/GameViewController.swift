@@ -63,50 +63,51 @@ class GameViewController: UIViewController {
             }
         }
     }
-    
+
     private func makeABCbtns(){
-//       let newButtons = createButtons(named: "A", "B", "C", "D", "E",
-//                      "F", "G", "H", "I", "J", "K","L", "M", "N", "O",
-//                      "P", "Q","R", "S", "T", "U", "V", "W","X", "Y", "Z")
-        let abcde = createButtons(named: "A", "B", "C", "D", "E")
-        let fghij = createButtons(named: "F", "G", "H", "I", "J")
-        let klmno = createButtons(named: "K","L", "M", "N", "O")
-        let pqrst = createButtons(named: "P", "Q","R", "S", "T")
-        let uvwxy = createButtons(named: "U", "V", "W","X", "Y")
-        let z     = createButtons(named: "Z")
+        let list = [["A", "B", "C", "D", "E"],
+                    ["F", "G", "H", "I", "J"],
+                    ["K","L", "M", "N", "O"],
+                    ["P", "Q","R", "S", "T"],
+                    ["U", "V", "W","X", "Y"],
+                    ["Z"]]
+        var groups = [UIStackView]()
         
-        let stackView = UIStackView(arrangedSubviews: abcde)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.spacing = 1
+        for i in list {
+            let group = createButtons(named: i)
+            let subStackView = UIStackView(arrangedSubviews: group)
+            subStackView.axis = .horizontal
+            subStackView.distribution = .fillEqually
+            subStackView.spacing = 4
+            groups.append(subStackView)
+        }
+        
+        let stackView = UIStackView(arrangedSubviews: groups)
+        stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        
-        // UIView where all the buttons will be in.
+        stackView.spacing = 4
         abcBtnView.addSubview(stackView)
         
-        
-        //I am giving the stackview the size of the abcBtnView.
         stackView.anchor(top: abcBtnView.topAnchor,
                          leading: abcBtnView.leadingAnchor,
                          bottom: abcBtnView.bottomAnchor,
                          trailing: abcBtnView.trailingAnchor,
                          centerXaxis: nil,
-                         centerYaxis: nil)
+                         centerYaxis: nil,
+                         padding: .init(top: 4, left: 4, bottom: 4, right: 4))
     }
     
-    func createButtons(named: String...) -> [UIButton]{
+    func createButtons(named: [String]) -> [UIButton]{
         return named.map { letter in
             let button = UIButton()
             button.translatesAutoresizingMaskIntoConstraints = false
             button.setTitle(letter, for: .normal)
-            button.backgroundColor = .green
             button.setTitleColor( .blue , for: .normal)
+            button.layer.borderWidth = 1
             return button
         }
-
     }
-    
-    
+
     
     func compareUserButtonWithAnswer(){
         // Grab the button text that was just pressed and
