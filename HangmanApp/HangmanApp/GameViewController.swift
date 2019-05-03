@@ -16,6 +16,11 @@ class GameViewController: UIViewController {
     var allWords = [String]()
     var letterBtns = [UIButton]()
     
+    var stackView: UIStackView = {
+        var stv = UIStackView()
+        
+        return stv
+    }()
     
     var answerUITextField: UITextField = {
         let answerUItxtField = UITextField()
@@ -34,7 +39,7 @@ class GameViewController: UIViewController {
     
     var abcBtnView: UIView = {
         var abcBtn = UIView()
-//        abcBtn.backgroundColor = .yellow
+
         return abcBtn
     }()
 
@@ -60,67 +65,48 @@ class GameViewController: UIViewController {
     }
     
     private func makeABCbtns(){
-        let abc = ["A","B","C","D","E",
-                   "F","G","H","I","J",
-                   "K","L","M","N","O",
-                   "P","Q","R","S","T",
-                   "U","V","W","X","Y",
-                   "Z"]
-    
-//
-//        // ABC buttons
-//        for letter in 1...26 {
-//            let newBtn = UIButton()
-//            newBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-//            newBtn.titleLabel?.text = "\(letter)"
-//            newBtn.frame = CGRect(x: i * 10, y: i * 22, width: 30, height: 40)
-//            newBtn.layer.borderWidth = 2
-//            newBtn.addTarget(self, action: #selector(tappedABCbtns), for: .touchUpInside)
-//            newBtn.backgroundColor = #colorLiteral(red: 0.4928962625, green: 0.9863584845, blue: 0.5132202631, alpha: 0.1388919454)
-//            abcBtnView.addSubview(newBtn)
-//            letterBtns.append(newBtn)
-//            i+=1
-//        }
-//
-        outerloop: for j in 1...2{
-            innerloop: for i in 1...5 {
-                if i == 4 {
-                    break outerloop
-                }
-                print("i = \(i)")
-            }
-            print("j = \(j)")
-        }
+//       let newButtons = createButtons(named: "A", "B", "C", "D", "E",
+//                      "F", "G", "H", "I", "J", "K","L", "M", "N", "O",
+//                      "P", "Q","R", "S", "T", "U", "V", "W","X", "Y", "Z")
+        let abcde = createButtons(named: "A", "B", "C", "D", "E")
+        let fghij = createButtons(named: "F", "G", "H", "I", "J")
+        let klmno = createButtons(named: "K","L", "M", "N", "O")
+        let pqrst = createButtons(named: "P", "Q","R", "S", "T")
+        let uvwxy = createButtons(named: "U", "V", "W","X", "Y")
+        let z     = createButtons(named: "Z")
+        
+        let stackView = UIStackView(arrangedSubviews: abcde)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 1
+        stackView.distribution = .fillEqually
+        
+        // UIView where all the buttons will be in.
+        abcBtnView.addSubview(stackView)
         
         
-        let width = 70
-        let height = 60
-        var i = 0
-        
-        outerloop: for row in 0..<5 {
-            for column in 0..<6 {
-                let newBtn = UIButton()
-                newBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-                newBtn.titleLabel?.text = "\(abc[i])"
-                let frame = CGRect(x: column * width, y: row * height, width: width, height: height)
-                newBtn.frame = frame
-                newBtn.contentEdgeInsets = UIEdgeInsets.init(top: 5, left: 5, bottom: 5, right: 5)
-                newBtn.layer.borderWidth = 2
-                newBtn.addTarget(self, action: #selector(tappedABCbtns), for: .touchUpInside)
-                newBtn.backgroundColor = #colorLiteral(red: 0.4928962625, green: 0.9863584845, blue: 0.5132202631, alpha: 0.1388919454)
-                abcBtnView.addSubview(newBtn)
-                letterBtns.append(newBtn)
-                i+=1
-                if i == 26 {
-                    break outerloop
-                }
-                
-            }
-        }
-        
-
-            
+        //I am giving the stackview the size of the abcBtnView.
+        stackView.anchor(top: abcBtnView.topAnchor,
+                         leading: abcBtnView.leadingAnchor,
+                         bottom: abcBtnView.bottomAnchor,
+                         trailing: abcBtnView.trailingAnchor,
+                         centerXaxis: nil,
+                         centerYaxis: nil)
     }
+    
+    func createButtons(named: String...) -> [UIButton]{
+        return named.map { letter in
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle(letter, for: .normal)
+            button.backgroundColor = .green
+            button.setTitleColor( .blue , for: .normal)
+            return button
+        }
+
+    }
+    
+    
     
     func compareUserButtonWithAnswer(){
         // Grab the button text that was just pressed and
@@ -216,3 +202,4 @@ class GameViewController: UIViewController {
     // TOOD: When user wins show a You WON screen with a button to start again. (Possibliy include a happy
     //       hangman gif. 😃
 }
+
