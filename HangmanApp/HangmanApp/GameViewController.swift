@@ -159,7 +159,6 @@ class GameViewController: UIViewController {
     }
     func makeUpdatedArray(){
         for (index, value) in correctWord_random.enumerated() {
-            print("Index: \(index) and value \(value) inside of correctWord_random: \(correctWord_random)")
             if emptyCorrectBoolArray[index] {
                 updatedWord += String(value) + " "
             } else {
@@ -235,7 +234,6 @@ class GameViewController: UIViewController {
             answerUITextField.text! += underScore
             print(letter)
         }
-        print(correctWord_underscore)
         
     }
     
