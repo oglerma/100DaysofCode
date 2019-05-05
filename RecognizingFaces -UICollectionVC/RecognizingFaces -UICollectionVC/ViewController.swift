@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UICollectionViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var people = [Person]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .black
@@ -24,11 +24,11 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         present(picker,animated: true)
         
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return people.count
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath) as? PersonCell else {fatalError("Unable to dequeue a PersonCell")}
         let person = people[indexPath.item]
@@ -62,6 +62,34 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let person = people[indexPath.item]
+        showOptionToRenameOrDelete(person,personIndex: indexPath)
+        
+    }
+    
+    func showOptionToRenameOrDelete(_ person: Person, personIndex: IndexPath){
+        let ac = UIAlertController(title: "Delete or Rename", message: "Do you want to delete or rename this image?", preferredStyle: .alert)
+        
+        //IF RENAME SELECTED (SHOW ANOTHER ALERTVIEWCONTROLLER)
+        ac.addAction(UIAlertAction(title: "Rename", style: .default){
+            [weak self] _ in
+            self?.rename(person)
+        })
+        
+        //IF DELETE SELECTED REMOVE FROM : 1. DATA SOURCE (ARRAY OF PEOPLE)
+        //                                 2. COLLECTIONVIEW AT THE INDEX PATH THIS IS AT.
+        //                                 3. THEN RELOAD TO SEE THE UPDATED SCREEN.
+        ac.addAction(UIAlertAction(title: "Delete", style: .default){
+            [weak self] _ in
+            self?.people.remove(at: personIndex.item)
+            self?.collectionView.deleteItems(at: [personIndex])
+            self?.collectionView.reloadData()
+        })
+        
+        present(ac, animated: true)
+        
+    }
+    
+    func rename(_ person: Person){
         let ac = UIAlertController(title: "Rename Person", message: nil, preferredStyle: .alert)
         ac.addTextField()
         ac.addAction(UIAlertAction(title: "OK", style: .default) {
@@ -69,10 +97,12 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             guard let newName = ac?.textFields?[0].text else {return}
             person.name = newName
             self?.collectionView.reloadData()
-            
         })
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
+        
     }
+    
 }
 
+//How to get the value of the action selected when displaying an UIAlertViewController
