@@ -14,7 +14,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .black
-        navigationItem.title = "Facial Recognition"
+        navigationItem.title = "Image Recognition"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
     }
     @objc func addNewPerson(){
