@@ -18,6 +18,7 @@ class CollectionViewController: UICollectionViewController {
         super.viewDidLoad()
 
         title = "Storm Viewer"
+        collectionView.backgroundColor = #colorLiteral(red: 0.8114321828, green: 0, blue: 0, alpha: 0.6398223459)
         navigationController?.navigationBar.prefersLargeTitles = true
         performSelector(inBackground: #selector(fetchImages), with: nil)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action , target: self, action: #selector(shareApp))
@@ -48,10 +49,6 @@ class CollectionViewController: UICollectionViewController {
     
 
     // MARK: UICollectionViewDataSource
-//    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 3
-//    }
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pictures.count
     }
@@ -60,8 +57,10 @@ class CollectionViewController: UICollectionViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
                          as? PictureCollectionViewCell else { fatalError("Can't get pictures")}
         cell.imageView.image = UIImage(named: pictures[indexPath.item])
+        cell.imageView.layer.cornerRadius = 4
         cell.picNumber.text = "Picture \(indexPath.row + 1)"
-
+        cell.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        cell.layer.cornerRadius = 8
         return cell
     }
 
