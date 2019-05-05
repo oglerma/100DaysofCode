@@ -30,7 +30,14 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath) as? PersonCell else {fatalError("Unable to dequeue a PersonCell")}
-        
+        let person = people[indexPath.item]
+        cell.name.text = person.name
+        let path = getDocumentsDirectory().appendingPathComponent(person.image)
+        cell.imageView.image = UIImage(contentsOfFile: path.path)
+        cell.imageView.layer.borderColor = UIColor(white: 0, alpha: 0.3).cgColor
+        cell.imageView.layer.borderWidth = 2
+        cell.imageView.layer.cornerRadius = 3
+        cell.layer.cornerRadius = 7
         return cell
     }
     
@@ -43,6 +50,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         }
         let person = Person(name: "unknown", image: imageName)
         people.append(person)
+        collectionView.reloadData()
         dismiss(animated: true)
     }
     
