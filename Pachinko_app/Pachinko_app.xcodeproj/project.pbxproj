@@ -14,6 +14,7 @@
 		37BDE2FD227FEC6C0053342D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37BDE2FB227FEC6C0053342D /* Main.storyboard */; };
 		37BDE2FF227FEC6E0053342D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37BDE2FE227FEC6E0053342D /* Assets.xcassets */; };
 		37BDE302227FEC6E0053342D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37BDE300227FEC6E0053342D /* LaunchScreen.storyboard */; };
+		37FEECB622829A560043D625 /* FireParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = 37FEECB522829A560043D625 /* FireParticles.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		37BDE2FE227FEC6E0053342D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37BDE301227FEC6E0053342D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		37BDE303227FEC6E0053342D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37FEECB522829A560043D625 /* FireParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireParticles.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				37BDE2FB227FEC6C0053342D /* Main.storyboard */,
 				37BDE2FE227FEC6E0053342D /* Assets.xcassets */,
 				37BDE300227FEC6E0053342D /* LaunchScreen.storyboard */,
+				37FEECB522829A560043D625 /* FireParticles.sks */,
 				37BDE303227FEC6E0053342D /* Info.plist */,
 			);
 			path = Pachinko_app;
@@ -130,6 +133,7 @@
 			files = (
 				37BDE2FD227FEC6C0053342D /* Main.storyboard in Resources */,
 				37BDE2F4227FEC6C0053342D /* GameScene.sks in Resources */,
+				37FEECB622829A560043D625 /* FireParticles.sks in Resources */,
 				37BDE2FF227FEC6E0053342D /* Assets.xcassets in Resources */,
 				37BDE302227FEC6E0053342D /* LaunchScreen.storyboard in Resources */,
 			);
