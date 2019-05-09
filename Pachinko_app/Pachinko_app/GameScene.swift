@@ -13,6 +13,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     /***************************************************
+     * PROPERTIES:
      * SCORELABEL, SCORE, EDITLABEL, EDITING MODE, BACKGROUND
      ***************************************************/
 
@@ -58,11 +59,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return b
     }()
     
+    var isObjectLessThan5: Bool = true
+    
+    var numberOfBalls = 5 {
+        didSet {
+            if numberOfBalls == 0 {
+                isObjectLessThan5 = false
+            }
+        }
+    }
+    
     
     /***************************************************
      * MARK: BUILT IN FUNCTIONS TO THIS VIEW
      *      - DIDMOVE()
      *      - TOUCHESBEGAN()
+     *      - DIDBEGIN()
      ***************************************************/
     override func didMove(to view: SKView) {
 
@@ -90,8 +102,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {return}
-        let location = touch.location(in: self)
+        var location = touch.location(in: self)
         let objects = nodes(at: location)
+        let colors = ["Purple", "Red", "Green", "Blue", "Yellow", "Grey", "Cyan"]
+        
         
         // DID THEY TAP THE EDITING BUTTON
         if objects.contains(editLabel){
@@ -105,26 +119,59 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                                                       blue: CGFloat.random(in: 0...1),
                                                       alpha: 1), size: size)
                 box.zRotation = CGFloat.random(in: 0...3)
+            
                 box.position = location
+                box.name = "box"
                 box.physicsBody = SKPhysicsBody(rectangleOf: box.size)
+                box.physicsBody?.contactTestBitMask = box.physicsBody?.collisionBitMask ?? 0
                 box.physicsBody?.isDynamic = false
                 addChild(box)
             } else {
-                let ball = SKSpriteNode(imageNamed: "ballRed")
-                ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
-                ball.physicsBody?.restitution = 1
-                ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask ?? 0
-                ball.position = location
-                ball.name = "ball"
-                addChild(ball)
+                if isObjectLessThan5 {
+                    let ball = SKSpriteNode(imageNamed: "ball\(colors.randomElement()!)")
+                    //Forcing the balls to start at the top of the screen by changing y
+                    location.y = 700
+                    ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
+                    ball.physicsBody?.restitution = 1
+                    ball.physicsBody?.contactTestBitMask = ball.physicsBody?.collisionBitMask ?? 0
+                    ball.position = location
+                    ball.name = "ball"
+                    addChild(ball)
+                    numberOfBalls -= 1
+                }
             }
-
         }
-        
-        
-
     }
     
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        guard let NodeA = contact.bodyA.node else {return}
+        guard let NodeB = contact.bodyB.node else {return}
+        // At the moment we only care if one of the Nodes is "ball"
+        // Regardless of whaat happens, since we are only tracking three things.
+        // (i.e. ball, box, and slot.
+        // Then whenever the ball hits something else, then the other Node would be that.
+        if NodeA.name == "ball"{
+            collision(between: NodeA, object: NodeB)
+        } else if NodeB.name == "ball"{
+            collision(between: NodeB, object: NodeA)
+        }
+    }
+    func collision(between ball: SKNode, object: SKNode){
+        
+        if object.name == "good"{
+            destroy(ball: ball)
+            score += 1
+        }else if object.name == "bad"{
+            destroy(ball: ball)
+            score -= 1
+        } else if object.name == "box"{
+            // Using the same destroy function for our object
+            // it accomplishes the same purpose.
+            destroy(ball: object)
+            score += 3
+        }
+    }
     
     
     func makeBouncer(at Position: CGPoint){
@@ -164,19 +211,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func collision(between ball: SKNode, object: SKNode){
-        
-        if object.name == "good"{
-            destroy(ball: ball)
-            score += 1
-        }else if object.name == "bad"{
-            destroy(ball: ball)
-            score -= 1
-        }
-    }
     
     func destroy(ball: SKNode){
-        
         if let fireParticles = SKEmitterNode(fileNamed: "FireParticles"){
             fireParticles.position = ball.position
             addChild(fireParticles)
@@ -184,17 +220,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.removeFromParent()
     }
     
-    func didBegin(_ contact: SKPhysicsContact) {
-        guard let NodeA = contact.bodyA.node else {return}
-        guard let NodeB = contact.bodyB.node else {return}
-        
-        
-        if NodeA.name == "ball"{
-            collision(between: NodeA, object: NodeB)
-        } else if NodeB.name == "ball"{
-            collision(between: NodeB, object: NodeA)
-        }
-    }
+    
+    
+
     
     
     
