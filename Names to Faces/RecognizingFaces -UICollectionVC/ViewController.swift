@@ -16,6 +16,13 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         collectionView.backgroundColor = .black
         navigationItem.title = "Image Recognition"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
+        
+        let defaults = UserDefaults.standard
+        if let savedPeople = defaults.object(forKey: "people") as? Data {
+            if let decodedPeople = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedPeople) as? [Person] {
+                people = decodedPeople
+            }
+        }
     }
     @objc func addNewPerson(){
         let picker = UIImagePickerController()
@@ -51,6 +58,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         }
         let person = Person(name: "unknown", image: imageName)
         people.append(person)
+        save()
         collectionView.reloadData()
         dismiss(animated: true)
     }
@@ -96,11 +104,19 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             [weak self, weak ac] _ in
             guard let newName = ac?.textFields?[0].text else {return}
             person.name = newName
+            self?.save()
             self?.collectionView.reloadData()
         })
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(ac, animated: true)
         
+    }
+    
+    func save(){
+        if let savedData = try? NSKeyedArchiver.archivedData(withRootObject: people, requiringSecureCoding: false){
+            let defaults = UserDefaults.standard
+            defaults.set(savedData, forKey: "people")
+        }
     }
     
 }
