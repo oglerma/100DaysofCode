@@ -12,4 +12,8 @@ class PictureCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var picNumber: UILabel!
+    @IBOutlet var viewCount: UILabel!
+
+
+    
 }

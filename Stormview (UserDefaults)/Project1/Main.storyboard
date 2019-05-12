@@ -37,7 +37,14 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xnB-jJ-ozM">
-                                            <rect key="frame" x="10" y="144" width="120" height="35"/>
+                                            <rect key="frame" x="10" y="144" width="120" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="csF-B4-2uZ" userLabel="View Count">
+                                            <rect key="frame" x="10" y="164" width="120" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -48,6 +55,7 @@
                                 <connections>
                                     <outlet property="imageView" destination="7y4-AS-wHh" id="rec-lJ-MTw"/>
                                     <outlet property="picNumber" destination="xnB-jJ-ozM" id="6KI-sd-Pee"/>
+                                    <outlet property="viewCount" destination="csF-B4-2uZ" id="UYE-Lb-mBL"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
