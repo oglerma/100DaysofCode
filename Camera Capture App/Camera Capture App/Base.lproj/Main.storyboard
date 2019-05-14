@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="100" id="OTx-eo-ACU">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="100" id="OTx-eo-ACU" customClass="CustomCell" customModule="Camera_Capture_App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OTx-eo-ACU" id="B7W-Yp-Tbk">
@@ -49,6 +49,10 @@
                                         <constraint firstItem="Xyh-1A-jpO" firstAttribute="centerX" relation="lessThanOrEqual" secondItem="B7W-Yp-Tbk" secondAttribute="centerX" id="s8U-Hs-iWo"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="imageLabel" destination="ue7-q9-ooD" id="7f4-HM-0ue"/>
+                                    <outlet property="mainImage" destination="Xyh-1A-jpO" id="Sqd-kB-5Tp"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -57,10 +61,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="HFb-sc-NZ0"/>
-                    <connections>
-                        <outlet property="imageLabel" destination="ue7-q9-ooD" id="cMl-o4-LeD"/>
-                        <outlet property="imageView" destination="Xyh-1A-jpO" id="PM7-c3-lQv"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9RR-kW-Mk3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

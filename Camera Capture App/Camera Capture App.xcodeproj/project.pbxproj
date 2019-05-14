@@ -12,6 +12,8 @@
 		3711E2DF228AFA4900566E1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3711E2DE228AFA4900566E1F /* Assets.xcassets */; };
 		3711E2E2228AFA4900566E1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3711E2E0228AFA4900566E1F /* LaunchScreen.storyboard */; };
 		3711E2EA228AFB0000566E1F /* CameraTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3711E2E9228AFB0000566E1F /* CameraTableViewController.swift */; };
+		3711E2EC228B1E5E00566E1F /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3711E2EB228B1E5E00566E1F /* CustomCell.swift */; };
+		3711E2EE228B208F00566E1F /* ProfileCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3711E2ED228B208F00566E1F /* ProfileCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		3711E2E1228AFA4900566E1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3711E2E3228AFA4900566E1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3711E2E9228AFB0000566E1F /* CameraTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTableViewController.swift; sourceTree = "<group>"; };
+		3711E2EB228B1E5E00566E1F /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		3711E2ED228B208F00566E1F /* ProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,9 +60,11 @@
 			children = (
 				3711E2D7228AFA4700566E1F /* AppDelegate.swift */,
 				3711E2DB228AFA4700566E1F /* Main.storyboard */,
+				3711E2EB228B1E5E00566E1F /* CustomCell.swift */,
+				3711E2E9228AFB0000566E1F /* CameraTableViewController.swift */,
+				3711E2ED228B208F00566E1F /* ProfileCard.swift */,
 				3711E2DE228AFA4900566E1F /* Assets.xcassets */,
 				3711E2E0228AFA4900566E1F /* LaunchScreen.storyboard */,
-				3711E2E9228AFB0000566E1F /* CameraTableViewController.swift */,
 				3711E2E3228AFA4900566E1F /* Info.plist */,
 			);
 			path = "Camera Capture App";
@@ -136,7 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3711E2EA228AFB0000566E1F /* CameraTableViewController.swift in Sources */,
+				3711E2EC228B1E5E00566E1F /* CustomCell.swift in Sources */,
 				3711E2D8228AFA4700566E1F /* AppDelegate.swift in Sources */,
+				3711E2EE228B208F00566E1F /* ProfileCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,36 +8,45 @@
 
 import UIKit
 
+let customCellID = "customIdentifier"
 class CameraTableViewController: UITableViewController {
 
-    @IBOutlet var imageView: UIImageView!
-    @IBOutlet var imageLabel: UILabel!
+    var profile = [ProfileCard]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(CustomCell.self, forCellReuseIdentifier: customCellID)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera , target: self, action: #selector(showImageOptionsActionSheet))
 
     }
 
     @objc func showImageOptionsActionSheet(){
-        
+        let ac = UIAlertController(title: "Import Images", message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Photo Library", style: .default){
+            [weak self] action in
+            self?.showImagePickerController(sourceType: .photoLibrary)
+        })
+        ac.addAction(UIAlertAction(title: "Take Photo", style: .default){
+            [weak self] action in
+            self?.showImagePickerController(sourceType: .camera)
+        })
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(ac,animated: true)
     }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return profile.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
-        // Configure the cell...
-        cell.textLabel?.text = "hello"
-
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: customCellID, for: indexPath) as? CustomCell else {fatalError("Couldn't make it work")}
+        let profileCard = profile[indexPath.row]
+        let path = getDocumentsDirectory().appendingPathComponent(profileCard.mainImage)
+        cell.imageView!.image = UIImage(contentsOfFile: path.path)
+        cell.imageLabel!.text = profileCard.imageLabel
         return cell
     }
-    
-  
-
 }
 
 extension CameraTableViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
@@ -51,10 +60,22 @@ extension CameraTableViewController: UINavigationControllerDelegate, UIImagePick
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.editedImage] as? UIImage {
-            imageView.image = image
+        guard let imagePicked = info[.editedImage] as? UIImage else {return}
+        let imageName = UUID().uuidString
+        let imagePath = getDocumentsDirectory().appendingPathComponent(imageName)
+        if let jpegData = imagePicked.jpegData(compressionQuality: 0.8){
+            try? jpegData.write(to: imagePath)
         }
+        
+        let picWithAddTxt = ProfileCard(mainImage: imageName, imageLabel: "Add text")
+        profile.append(picWithAddTxt)
+        tableView.reloadData()
+        dismiss(animated: true)
+
     }
     
-    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
 }
