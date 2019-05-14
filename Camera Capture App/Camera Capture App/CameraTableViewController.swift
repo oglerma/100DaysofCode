@@ -10,11 +10,18 @@ import UIKit
 
 class CameraTableViewController: UITableViewController {
 
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var imageLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera , target: self, action: #selector(showImageOptionsActionSheet))
 
     }
 
+    @objc func showImageOptionsActionSheet(){
+        
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -28,6 +35,26 @@ class CameraTableViewController: UITableViewController {
 
         return cell
     }
+    
+  
 
+}
 
+extension CameraTableViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func showImagePickerController(sourceType: UIImagePickerController.SourceType){
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        imagePickerController.sourceType = sourceType
+        present(imagePickerController, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.editedImage] as? UIImage {
+            imageView.image = image
+        }
+    }
+    
+    
 }
