@@ -9,19 +9,23 @@
 import UIKit
 
 class CustomCell: UITableViewCell{
-    
+    var cellView: UIView = {
+        var cellV = UIView()
+        cellV.backgroundColor = UIColor(red: 0, green: 0, blue: 170, alpha: 0.8)
+        cellV.addShadow()
+        return cellV
+    }()
 
     var mainImage: UIImageView = {
         var img = UIImageView()
-      
-        img.translatesAutoresizingMaskIntoConstraints = false
-        img.backgroundColor = .red
+        img.contentMode = .scaleAspectFit
+        img.backgroundColor = UIColor(red: 0, green: 255, blue: 170, alpha: 0.8)
         return img
     }()
     
     var imageLabel: UILabel = {
         var lbl = UILabel()
-        lbl.backgroundColor = .green
+      lbl.backgroundColor = .green
         return lbl
     }()
     
@@ -32,23 +36,30 @@ class CustomCell: UITableViewCell{
     }
     
     func setUp(){
-
-        addSubview(mainImage)
-        addSubview(imageLabel)
-
-        mainImage.anchor(top: self.topAnchor,
-                         leading: self.leadingAnchor,
+        self.addSubview(cellView)
+        cellView.addSubview(mainImage)
+        cellView.addSubview(imageLabel)
+        
+        cellView.anchor(top: self.topAnchor,
+                         leading:self.leadingAnchor,
                          bottom: self.bottomAnchor,
+                         trailing: self.trailingAnchor,
+                         centerXaxis: nil,
+                         centerYaxis: nil,
+                         padding: .init(top: 4, left: 8, bottom: 4, right: 8))
+
+        mainImage.anchor(top: cellView.topAnchor,
+                         leading: cellView.leadingAnchor,
+                         bottom: cellView.bottomAnchor,
                          trailing: nil,
                          centerXaxis: nil,
                          centerYaxis: nil,
-                         padding: .init(top: 4, left: 8, bottom: 4, right: 8),
-                         size: .init(width: 45, height: 0))
+                         padding: .init(top: 10, left: 8, bottom: 10, right: 0))
         
-        imageLabel.anchor(top: self.topAnchor,
+        imageLabel.anchor(top: cellView.topAnchor,
                           leading: mainImage.trailingAnchor,
-                          bottom: self.bottomAnchor,
-                          trailing: self.trailingAnchor,
+                          bottom: cellView.bottomAnchor,
+                          trailing: trailingAnchor,
                           centerXaxis: nil,
                           centerYaxis: nil,
                           padding: .init(top: 4, left: 8, bottom: 4, right: 8))

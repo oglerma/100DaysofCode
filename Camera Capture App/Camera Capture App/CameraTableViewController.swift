@@ -18,6 +18,8 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(CustomCell.self, forCellReuseIdentifier: customCellID)
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera , target: self, action: #selector(showImageOptionsActionSheet))
 
     }
@@ -50,6 +52,9 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
     
     func showImagePickerController(sourceType: UIImagePickerController.SourceType){
         let imagePickerController = UIImagePickerController()

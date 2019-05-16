@@ -21,6 +21,8 @@ extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         
         // TOP, BOTTOM, LEFT AND RIGHT CONSTRAINTS
+        // TOP AND BOTTOM ( Y AXIS )
+        // LEFT AND RIGHT ( X AXIS )
         if let top = top {
             self.topAnchor.constraint(equalTo: top,
                                       constant: padding.top).isActive = true
@@ -28,7 +30,7 @@ extension UIView {
         
         if let bottom = bottom {
             self.bottomAnchor.constraint(equalTo: bottom,
-                                         constant: padding.bottom).isActive = true
+                                         constant: -padding.bottom).isActive = true
             
         }
         if let trailing = trailing {
@@ -40,11 +42,11 @@ extension UIView {
                                           constant: padding.left).isActive = true
         }
         
-        // CENTER X AXIS AND CENTER Y AXIS
+        // CENTER X AXIS
         if let centerX = centerXaxis {
             self.centerXAnchor.constraint(equalTo: centerX).isActive = true
         }
-        
+        // CENTER Y AXIS
         if let centerY = centerYaxis {
             self.centerYAnchor.constraint(equalTo: centerY).isActive = true
         }
