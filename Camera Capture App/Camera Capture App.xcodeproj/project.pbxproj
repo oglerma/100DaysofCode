@@ -14,6 +14,7 @@
 		3711E2EA228AFB0000566E1F /* CameraTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3711E2E9228AFB0000566E1F /* CameraTableViewController.swift */; };
 		3711E2EC228B1E5E00566E1F /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3711E2EB228B1E5E00566E1F /* CustomCell.swift */; };
 		3711E2EE228B208F00566E1F /* ProfileCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3711E2ED228B208F00566E1F /* ProfileCard.swift */; };
+		375C057F228D843600E82CBE /* AnchorsExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375C057E228D843600E82CBE /* AnchorsExt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		3711E2E9228AFB0000566E1F /* CameraTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraTableViewController.swift; sourceTree = "<group>"; };
 		3711E2EB228B1E5E00566E1F /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		3711E2ED228B208F00566E1F /* ProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCard.swift; sourceTree = "<group>"; };
+		375C057E228D843600E82CBE /* AnchorsExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnchorsExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				3711E2D7228AFA4700566E1F /* AppDelegate.swift */,
 				3711E2DB228AFA4700566E1F /* Main.storyboard */,
 				3711E2EB228B1E5E00566E1F /* CustomCell.swift */,
+				375C057E228D843600E82CBE /* AnchorsExt.swift */,
 				3711E2E9228AFB0000566E1F /* CameraTableViewController.swift */,
 				3711E2ED228B208F00566E1F /* ProfileCard.swift */,
 				3711E2DE228AFA4900566E1F /* Assets.xcassets */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3711E2EA228AFB0000566E1F /* CameraTableViewController.swift in Sources */,
+				375C057F228D843600E82CBE /* AnchorsExt.swift in Sources */,
 				3711E2EC228B1E5E00566E1F /* CustomCell.swift in Sources */,
 				3711E2D8228AFA4700566E1F /* AppDelegate.swift in Sources */,
 				3711E2EE228B208F00566E1F /* ProfileCard.swift in Sources */,
@@ -300,7 +304,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ociel.Camera-Capture-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -318,7 +322,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ociel.Camera-Capture-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

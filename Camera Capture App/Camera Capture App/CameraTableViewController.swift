@@ -9,9 +9,11 @@
 import UIKit
 
 let customCellID = "customIdentifier"
-class CameraTableViewController: UITableViewController {
+class CameraTableViewController: UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     var profile = [ProfileCard]()
+    
+    var testArray = ["One", "two", "Three", "four", "five"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,13 +45,11 @@ class CameraTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: customCellID, for: indexPath) as? CustomCell else {fatalError("Couldn't make it work")}
         let profileCard = profile[indexPath.row]
         let path = getDocumentsDirectory().appendingPathComponent(profileCard.mainImage)
-        cell.imageView!.image = UIImage(contentsOfFile: path.path)
-        cell.imageLabel!.text = profileCard.imageLabel
+        cell.imageView?.image = UIImage(contentsOfFile: path.path)
+        cell.imageLabel.text = profileCard.imageLabel
         return cell
     }
-}
-
-extension CameraTableViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
     
     func showImagePickerController(sourceType: UIImagePickerController.SourceType){
         let imagePickerController = UIImagePickerController()
@@ -71,7 +71,7 @@ extension CameraTableViewController: UINavigationControllerDelegate, UIImagePick
         profile.append(picWithAddTxt)
         tableView.reloadData()
         dismiss(animated: true)
-
+        
     }
     
     func getDocumentsDirectory() -> URL {
@@ -79,3 +79,4 @@ extension CameraTableViewController: UINavigationControllerDelegate, UIImagePick
         return paths[0]
     }
 }
+
