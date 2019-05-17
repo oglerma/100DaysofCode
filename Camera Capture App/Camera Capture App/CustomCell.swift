@@ -11,21 +11,23 @@ import UIKit
 class CustomCell: UITableViewCell{
     var cellView: UIView = {
         var cellV = UIView()
-        cellV.backgroundColor = UIColor(red: 0, green: 0, blue: 170, alpha: 0.8)
+        cellV.layer.cornerRadius = 20
+        cellV.backgroundColor = .white
         cellV.addShadow()
         return cellV
     }()
-
+    
     var mainImage: UIImageView = {
         var img = UIImageView()
-        img.contentMode = .scaleAspectFit
-        img.backgroundColor = UIColor(red: 0, green: 255, blue: 170, alpha: 0.8)
+        img.contentMode = .scaleToFill
+        img.layer.borderColor = UIColor.lightGray.cgColor
+        img.layer.masksToBounds = true
+        img.layer.cornerRadius = 55
         return img
     }()
     
     var imageLabel: UILabel = {
         var lbl = UILabel()
-      lbl.backgroundColor = .green
         return lbl
     }()
     
@@ -36,6 +38,7 @@ class CustomCell: UITableViewCell{
     }
     
     func setUp(){
+        backgroundColor = .white
         self.addSubview(cellView)
         cellView.addSubview(mainImage)
         cellView.addSubview(imageLabel)
@@ -48,13 +51,14 @@ class CustomCell: UITableViewCell{
                          centerYaxis: nil,
                          padding: .init(top: 4, left: 8, bottom: 4, right: 8))
 
-        mainImage.anchor(top: cellView.topAnchor,
+        mainImage.anchor(top: nil,
                          leading: cellView.leadingAnchor,
-                         bottom: cellView.bottomAnchor,
+                         bottom: nil,
                          trailing: nil,
                          centerXaxis: nil,
-                         centerYaxis: nil,
-                         padding: .init(top: 10, left: 8, bottom: 10, right: 0))
+                         centerYaxis: cellView.centerYAnchor,
+                         padding: .init(top: 2, left: 12, bottom: 2, right: 0),
+                         size: .init(width: 110, height: 120) )
         
         imageLabel.anchor(top: cellView.topAnchor,
                           leading: mainImage.trailingAnchor,
@@ -78,7 +82,7 @@ extension UIView {
     func addShadow(){
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOpacity = 0.5
-        self.layer.shadowRadius = 2.0
+        self.layer.shadowRadius = 4.0
         self.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
     }
 }

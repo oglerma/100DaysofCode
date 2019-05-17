@@ -13,13 +13,14 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
 
     var profile = [ProfileCard]()
     
-    var testArray = ["One", "two", "Three", "four", "five"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(CustomCell.self, forCellReuseIdentifier: customCellID)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        navigationItem.title = "Add Contacts"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera , target: self, action: #selector(showImageOptionsActionSheet))
 
     }
@@ -47,13 +48,17 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
         guard let cell = tableView.dequeueReusableCell(withIdentifier: customCellID, for: indexPath) as? CustomCell else {fatalError("Couldn't make it work")}
         let profileCard = profile[indexPath.row]
         let path = getDocumentsDirectory().appendingPathComponent(profileCard.mainImage)
-        cell.imageView?.image = UIImage(contentsOfFile: path.path)
+        cell.mainImage.image = UIImage(contentsOfFile: path.path)
         cell.imageLabel.text = profileCard.imageLabel
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 140
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Add pictures"
     }
     
     func showImagePickerController(sourceType: UIImagePickerController.SourceType){
@@ -85,3 +90,11 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
     }
 }
 
+
+
+// TODO: Add saving to the app
+// TODO: add Detail VC
+// TODO: Remove items
+// TODO: Add caption
+// TODO: Show Saved images
+// TODO: 
