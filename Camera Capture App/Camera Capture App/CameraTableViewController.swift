@@ -66,6 +66,13 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
         cell.imageLabel.text = profileCard.imageLabel
         return cell
     }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            profile.remove(at: indexPath.row)
+        }
+        tableView.reloadData()
+        save()
+    }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
@@ -119,9 +126,8 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
 
 
 
-// TODO: Add saving to the app
+
 // TODO: add Detail VC
-// TODO: Remove items
 // TODO: Add caption
 // TODO: Show Saved images
 // TODO: 
