@@ -15,6 +15,7 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadSavedData()
         tableView.register(CustomCell.self, forCellReuseIdentifier: customCellID)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
@@ -23,6 +24,19 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera , target: self, action: #selector(showImageOptionsActionSheet))
 
+    }
+    
+    func loadSavedData(){
+        let defaults = UserDefaults.standard
+        if let savedData = defaults.object(forKey: "profile") as? Data {
+            let jsonDecoder = JSONDecoder()
+            do {
+                let updatedProfile = try jsonDecoder.decode([ProfileCard].self, from: savedData)
+                profile = updatedProfile
+            }catch{
+                print("couldn't decode the Profile")
+            }
+        }
     }
 
     @objc func showImageOptionsActionSheet(){
@@ -79,6 +93,7 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
         
         let picWithAddTxt = ProfileCard(mainImage: imageName, imageLabel: "Add text")
         profile.append(picWithAddTxt)
+        save()
         tableView.reloadData()
         dismiss(animated: true)
         
@@ -87,6 +102,18 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
+    }
+    
+    func save(){
+        let jsonEncoder = JSONEncoder()
+        
+        if let savedData = try? jsonEncoder.encode(profile) {
+            let defaults = UserDefaults.standard
+            defaults.set(savedData, forKey: "profile")
+        }else{
+            print("Failed to save Profile")
+        }
+        
     }
 }
 

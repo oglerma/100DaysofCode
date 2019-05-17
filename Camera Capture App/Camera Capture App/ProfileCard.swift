@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileCard {
+class ProfileCard: Codable {
     var mainImage: String
     var imageLabel: String
     
