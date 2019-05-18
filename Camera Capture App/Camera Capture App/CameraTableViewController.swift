@@ -12,18 +12,25 @@ let customCellID = "customIdentifier"
 class CameraTableViewController: UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     var profile = [ProfileCard]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadSavedData()
         tableView.register(CustomCell.self, forCellReuseIdentifier: customCellID)
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        setNavigationUI()
+
+    }
+    
+    func setNavigationUI(){
         navigationItem.title = "Add Contacts"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera , target: self, action: #selector(showImageOptionsActionSheet))
-
+        navigationController?.navigationBar.barTintColor = UIColor(red: 0/255, green: 255/255, blue: 198/255, alpha: 1)
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15)]
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera ,
+                                                            target: self,
+                                                            action: #selector(showImageOptionsActionSheet))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.black
     }
     
     func loadSavedData(){
@@ -78,10 +85,6 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
         return 140
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Add pictures"
-    }
-    
     func showImagePickerController(sourceType: UIImagePickerController.SourceType){
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -97,13 +100,22 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
         if let jpegData = imagePicked.jpegData(compressionQuality: 0.8){
             try? jpegData.write(to: imagePath)
         }
-        
-        let picWithAddTxt = ProfileCard(mainImage: imageName, imageLabel: "Add text")
-        profile.append(picWithAddTxt)
-        save()
-        tableView.reloadData()
         dismiss(animated: true)
         
+        let ac = UIAlertController(title: "Add name", message: "Be creative!", preferredStyle: .alert)
+        ac.addTextField()
+        
+        let nameAdded = UIAlertAction(title: "Add Name", style: .default){[weak self, weak ac] action in
+            guard let usertextAnswer = ac?.textFields?[0].text else {return}
+            let picWithAddTxt = ProfileCard(mainImage: imageName, imageLabel: usertextAnswer.uppercased() )
+            self?.profile.append(picWithAddTxt)
+            self?.save()
+            self?.tableView.reloadData()
+        }
+        
+        ac.addAction(nameAdded)
+        present(ac,animated: true)
+
     }
     
     func getDocumentsDirectory() -> URL {
@@ -113,21 +125,19 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
     
     func save(){
         let jsonEncoder = JSONEncoder()
-        
         if let savedData = try? jsonEncoder.encode(profile) {
             let defaults = UserDefaults.standard
             defaults.set(savedData, forKey: "profile")
         }else{
             print("Failed to save Profile")
         }
-        
     }
+    
+    
+    
 }
 
 
 
 
 // TODO: add Detail VC
-// TODO: Add caption
-// TODO: Show Saved images
-// TODO: 

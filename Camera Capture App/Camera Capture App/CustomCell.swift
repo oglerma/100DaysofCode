@@ -28,6 +28,9 @@ class CustomCell: UITableViewCell{
     
     var imageLabel: UILabel = {
         var lbl = UILabel()
+        lbl.textAlignment = .center
+        lbl.font = UIFont(name: "Roboto", size: 15)
+        lbl.textColor = UIColor.black
         return lbl
     }()
     
