@@ -17,7 +17,6 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
         loadSavedData()
         tableView.register(CustomCell.self, forCellReuseIdentifier: customCellID)
         tableView.separatorStyle = .none
-        tableView.allowsSelection = false
         setNavigationUI()
 
     }
@@ -84,6 +83,22 @@ class CameraTableViewController: UITableViewController, UINavigationControllerDe
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
     }
+
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let profileCard = profile[indexPath.row]
+        let path = getDocumentsDirectory().appendingPathComponent(profileCard.mainImage)
+        
+        let vc = DetailViewController()
+        vc.detailImgView.image = UIImage(contentsOfFile: path.path)
+        vc.detailTitleName = profileCard.imageLabel
+        
+        navigationController?.pushViewController(vc, animated: true)
+
+    }
+    
+    
+    
     
     func showImagePickerController(sourceType: UIImagePickerController.SourceType){
         let imagePickerController = UIImagePickerController()
