@@ -95,7 +95,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
     }
     
     @IBAction func save(_ sender: Any) {
-        
+        guard let image = imageView.image else {return}
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavinWithError:contextInfo:)), nil)
     }
     
     @IBAction func intensityChanged(_ sender: Any) {
@@ -141,6 +142,16 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
     }
 
 
+    @objc func image(_ image: UIImage, didFinishSavinWithError error: Error?, contextInfo: UnsafeRawPointer){
+        if let error = error {
+            let ac = UIAlertController(title: "Save Error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .default))
+        }else {
+            let ac = UIAlertController(title: "Saved!", message: "You altered image has been saved to your photos", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .default))
+            present(ac, animated: true)
+        }
+    }
 }
 
 
