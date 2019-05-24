@@ -14,9 +14,16 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
     
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var intensity: UISlider!
+    @IBOutlet var filterNameLbl: UILabel!
+    @IBOutlet var radiusSlider: UISlider!
+    @IBOutlet var radiusLabel: UILabel!
     var currentImage: UIImage!
     var context: CIContext!       // handles rendering
-    var currentFilter: CIFilter!  // Store whatever filter the user has activated
+    var currentFilter: CIFilter!{
+        didSet{
+            filterNameLbl.text = currentFilter.name
+        }
+    } // Store whatever filter the user has activated
     
 
     override func viewDidLoad() {
@@ -24,7 +31,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         title = "InstaFilter"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(importPicture))
         context = CIContext()
-        currentFilter = CIFilter(name: FilterType.CISepiaTone.rawValue)
+        currentFilter = CIFilter(name: FilterType.CIVignette.rawValue)
     }
 
     @objc func importPicture(){
@@ -80,38 +87,62 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         }
         
         present(ac, animated: true)
-        
-        print(FilterType.CISepiaTone.rawValue)
     }
     
     func setFilter(action: UIAlertAction){
         guard currentImage != nil else {return}
         guard let actionTitle = action.title else {return}
-        
+
         currentFilter = CIFilter(name: actionTitle)
+        print("Inside Set Filter with:  \(currentFilter.name)")
         let beginImage = CIImage(image: currentImage)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
         applyProcessing()
+        
     }
     
     @IBAction func save(_ sender: Any) {
-        guard let image = imageView.image else {return}
+        guard let image = imageView.image else {
+            showAlertWithNoImageSaved()
+            return
+        }
+        
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavinWithError:contextInfo:)), nil)
+    }
+    
+    func showAlertWithNoImageSaved(){
+        let ac = UIAlertController(title: "There is no image to save. ", message: "Please upload image", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
     
     @IBAction func intensityChanged(_ sender: Any) {
         applyProcessing()
     }
     
+    @IBAction func radiusChanged(_ sender: Any) {
+        applyProcessing()
+    }
     
     func applyProcessing(){
         let inputKeys = currentFilter.inputKeys
+        
+        if inputKeys.contains(kCIInputRadiusKey){
+            radiusLabel.isHidden = false
+            radiusSlider.isHidden = false
+        }else {
+            radiusLabel.isHidden = true
+            radiusSlider.isHidden = true
+        }
+        
+        print("These are the input keys \(inputKeys)")
         if inputKeys.contains(kCIInputIntensityKey){
             currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
         }
         
         if inputKeys.contains(kCIInputRadiusKey){
-            currentFilter.setValue(intensity.value * 200, forKey: kCIInputRadiusKey)
+         currentFilter.setValue(radiusSlider.value * 300, forKey: kCIInputRadiusKey)
+            print("This is radius Slider: \(radiusSlider.value)")
         }
         
         if inputKeys.contains(kCIInputScaleKey){
