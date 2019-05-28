@@ -28,6 +28,8 @@
 		370EA5792298B3A4005F24B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		370EA57B2298B3A4005F24B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		370EA59D2298B666005F24B7 /* WhackSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhackSlot.swift; sourceTree = "<group>"; };
+		E9973EF0229CECE80078E27B /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
+		E9973EF1229CECF40078E27B /* whackBad.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whackBad.caf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,8 @@
 				370EA5762298B3A4005F24B7 /* Assets.xcassets */,
 				370EA5782298B3A4005F24B7 /* LaunchScreen.storyboard */,
 				370EA57B2298B3A4005F24B7 /* Info.plist */,
+				E9973EF1229CECF40078E27B /* whackBad.caf */,
+				E9973EF0229CECE80078E27B /* whack.caf */,
 			);
 			path = "Penguin App";
 			sourceTree = "<group>";
