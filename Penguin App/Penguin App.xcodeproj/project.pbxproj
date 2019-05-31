@@ -15,6 +15,10 @@
 		370EA5772298B3A4005F24B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370EA5762298B3A4005F24B7 /* Assets.xcassets */; };
 		370EA57A2298B3A4005F24B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370EA5782298B3A4005F24B7 /* LaunchScreen.storyboard */; };
 		370EA59E2298B666005F24B7 /* WhackSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370EA59D2298B666005F24B7 /* WhackSlot.swift */; };
+		E9973EF422A1701B0078E27B /* whackBad.caf in Resources */ = {isa = PBXBuildFile; fileRef = E9973EF222A16EC90078E27B /* whackBad.caf */; };
+		E9973EF522A1701E0078E27B /* whack.caf in Resources */ = {isa = PBXBuildFile; fileRef = E9973EF322A16ED30078E27B /* whack.caf */; };
+		E9973EFA22A1722C0078E27B /* Smoke.sks in Resources */ = {isa = PBXBuildFile; fileRef = E9973EF822A1722C0078E27B /* Smoke.sks */; };
+		E9973EFB22A1722C0078E27B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9973EF922A1722C0078E27B /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +32,10 @@
 		370EA5792298B3A4005F24B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		370EA57B2298B3A4005F24B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		370EA59D2298B666005F24B7 /* WhackSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhackSlot.swift; sourceTree = "<group>"; };
-		E9973EF0229CECE80078E27B /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
-		E9973EF1229CECF40078E27B /* whackBad.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whackBad.caf; sourceTree = "<group>"; };
+		E9973EF222A16EC90078E27B /* whackBad.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whackBad.caf; sourceTree = "<group>"; };
+		E9973EF322A16ED30078E27B /* whack.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = whack.caf; sourceTree = "<group>"; };
+		E9973EF822A1722C0078E27B /* Smoke.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Smoke.sks; sourceTree = "<group>"; };
+		E9973EF922A1722C0078E27B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +52,8 @@
 		370EA55D2298B3A2005F24B7 = {
 			isa = PBXGroup;
 			children = (
+				E9973EF822A1722C0078E27B /* Smoke.sks */,
+				E9973EF922A1722C0078E27B /* Assets.xcassets */,
 				370EA5682298B3A2005F24B7 /* Penguin App */,
 				370EA5672298B3A2005F24B7 /* Products */,
 			);
@@ -62,6 +70,8 @@
 		370EA5682298B3A2005F24B7 /* Penguin App */ = {
 			isa = PBXGroup;
 			children = (
+				E9973EF322A16ED30078E27B /* whack.caf */,
+				E9973EF222A16EC90078E27B /* whackBad.caf */,
 				370EA5692298B3A2005F24B7 /* AppDelegate.swift */,
 				370EA56B2298B3A2005F24B7 /* GameScene.sks */,
 				370EA56F2298B3A2005F24B7 /* GameScene.swift */,
@@ -71,8 +81,6 @@
 				370EA5762298B3A4005F24B7 /* Assets.xcassets */,
 				370EA5782298B3A4005F24B7 /* LaunchScreen.storyboard */,
 				370EA57B2298B3A4005F24B7 /* Info.plist */,
-				E9973EF1229CECF40078E27B /* whackBad.caf */,
-				E9973EF0229CECE80078E27B /* whack.caf */,
 			);
 			path = "Penguin App";
 			sourceTree = "<group>";
@@ -135,10 +143,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9973EF422A1701B0078E27B /* whackBad.caf in Resources */,
 				370EA5752298B3A2005F24B7 /* Main.storyboard in Resources */,
+				E9973EFA22A1722C0078E27B /* Smoke.sks in Resources */,
 				370EA56C2298B3A2005F24B7 /* GameScene.sks in Resources */,
 				370EA5772298B3A4005F24B7 /* Assets.xcassets in Resources */,
 				370EA57A2298B3A4005F24B7 /* LaunchScreen.storyboard in Resources */,
+				E9973EFB22A1722C0078E27B /* Assets.xcassets in Resources */,
+				E9973EF522A1701E0078E27B /* whack.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

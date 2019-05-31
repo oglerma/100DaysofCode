@@ -49,9 +49,9 @@ class GameScene: SKScene {
         }
         
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+
         // Presents a new Screen when we are done with this game.
         if isGameOver {
             let newScene = GameScene(size: self.size)
@@ -59,29 +59,29 @@ class GameScene: SKScene {
             let animation = SKTransition.fade(withDuration: 1.0)
             self.view?.presentScene(newScene, transition: animation)
         }
-        
-        
+
+
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         let tappedNodes = nodes(at: location)
-        
+
         for node in tappedNodes {
             guard let whackSlot = node.parent?.parent as? WhackSlot else { continue }
             if !whackSlot.isVisible { continue}
             if whackSlot.isHit { continue}
             whackSlot.hit()
-            
+
             if node.name == "charFriend" {
-                
-                score -= 5
-                run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
+
+                score += 5
+                run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
             } else if node.name == "charEnemy" {
-                
+
                 whackSlot.charNode.xScale = 0.85
                 whackSlot.charNode.yScale = 0.85
-                score += 1
-                run(SKAction.playSoundFileNamed("whack.caf", waitForCompletion: false))
-                
+                score -= 1
+                run(SKAction.playSoundFileNamed("whackBad.caf", waitForCompletion: false))
+
             }
         }
     }
