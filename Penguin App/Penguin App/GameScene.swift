@@ -8,11 +8,14 @@
 
 import SpriteKit
 import GameplayKit
+import UIKit
 
 class GameScene: SKScene {
     
+
     var slots = [WhackSlot]()
     var gameScore: SKLabelNode!
+    var isGameOver = false
     
     var popupTime = 0.85
     var numRounds = 0
@@ -48,6 +51,16 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        // Presents a new Screen when we are done with this game.
+        if isGameOver {
+            let newScene = GameScene(size: self.size)
+            newScene.scaleMode = self.scaleMode
+            let animation = SKTransition.fade(withDuration: 1.0)
+            self.view?.presentScene(newScene, transition: animation)
+        }
+        
+        
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         let tappedNodes = nodes(at: location)
@@ -88,9 +101,11 @@ class GameScene: SKScene {
                 slot.hide()
             }
             let gameOver = SKSpriteNode(imageNamed: "gameOver")
+            gameOver.name = "gameOverNode"
             gameOver.position = CGPoint(x: 512, y: 384)
             gameOver.zPosition = 1
             addChild(gameOver)
+            isGameOver = true
             return
         }
         popupTime *= 0.991
@@ -111,4 +126,9 @@ class GameScene: SKScene {
         }
         
     }
+    
+    deinit {
+        print("We are inside Game scene deinit")
+    }
+
 }
