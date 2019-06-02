@@ -71,6 +71,8 @@ class ViewController: UIViewController {
 
     @IBAction func buttonTapped(_ sender: UIButton) {
         numberOfQuestionsAsked += 1
+        
+
 
         print("This is best score \(bestScore)")
         print("This is beatBestscore \(beatBestScore)")
@@ -81,7 +83,13 @@ class ViewController: UIViewController {
             showFinalAlert()
             print("Showed final alert already")
         }else {
-            showScoreAlert(buttonTagNumber: sender.tag)
+            
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
+                sender.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+            }) { (fishished) in
+                sender.transform = .identity
+                self.showScoreAlert(buttonTagNumber: sender.tag)
+            }
         }
         print("This is the number of questions asked in buttonTapped = \(numberOfQuestionsAsked)")
     }
