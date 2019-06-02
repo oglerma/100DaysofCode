@@ -34,6 +34,34 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         currentFilter = CIFilter(name: FilterType.CIVignette.rawValue)
     }
 
+    /*****************************************************
+    * Called before the image is added to the view.
+    * Basically it is saying that this function is promosing to do what
+    * is inside of the function earlier than expected. So before going back to
+    * our viewController, this function is being invoved.
+    ******************************************************/
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        imageView.alpha = 0
+    }
+    
+    
+    /***************************************************
+     * it basically means that this is being called when the screen is
+     * shown to the user. The difference between viewDidAppear and
+     * viewDidLoad is that viewDidAppear is called every time you land on
+     * the screen while viewDidLoad is only called once which is
+     * when the app loads.
+     // Called after the image is added to the view.
+     ***************************************************/
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.animate(withDuration: 2) {
+            self.imageView.alpha = 1
+        }
+    }
+    
     @objc func importPicture(){
         let picker = UIImagePickerController()
         picker.allowsEditing = true
@@ -46,7 +74,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         dismiss(animated: true)
         currentImage = image
         
+    
         let beginImage = CIImage(image: currentImage)
+        
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
         applyProcessing()
     }
@@ -157,7 +187,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate, UINaviga
         
         if let cgImage = context.createCGImage(outputImage, from: outputImage.extent){
             let processedImage = UIImage(cgImage: cgImage)
-            imageView.image = processedImage
+            self.imageView.image = processedImage
         }
     }
     
