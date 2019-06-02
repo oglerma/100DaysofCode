@@ -226,6 +226,10 @@ class ViewController: UIViewController {
                 currentAnswer.text = ""
                 for button in activatedButtons {
                     button.isHidden = false
+                    // Reshow button with animation
+                    UIView.animate(withDuration: 1){
+                        button.alpha = 1
+                    }
                 }
                 activatedButtons.removeAll()
             }
