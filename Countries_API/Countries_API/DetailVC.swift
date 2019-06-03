@@ -12,29 +12,24 @@ class DetailVC: UIViewController {
 
     var flagImageView: UIImageView = {
         var imgV = UIImageView()
-        imgV.backgroundColor = .red
         return imgV
     }()
-    var flagImage: UIImage = {
-        var img = UIImage()
-        return img
-    }()
+
     var countryName: UILabel = {
         var lbl = UILabel()
-        lbl.backgroundColor = .blue
+        lbl.textAlignment = .center
         return lbl
     }()
     var countryCapital: UILabel = {
         var lbl = UILabel()
-        lbl.backgroundColor = .yellow
+        lbl.textAlignment = .center
         return lbl
     }()
     var countryRegion: UILabel = {
         var lbl = UILabel()
-//        lbl.backgroundColor = .green
+        lbl.textAlignment = .center
         return lbl
     }()
-    
     
     
     override func viewDidLoad() {
@@ -60,29 +55,26 @@ class DetailVC: UIViewController {
                              padding: .init(top: 10, left: 40, bottom: 0, right: 40),
                              size: .init(width: 0, height: 180))
         countryName.anchor(top: flagImageView.bottomAnchor,
-                             leading: nil,
+                             leading: view.safeAreaLayoutGuide.leadingAnchor,
                              bottom: nil,
-                             trailing: nil,
-                             centerXaxis: nil,
-                             centerYaxis: view.centerYAnchor,
-                             padding: .init(top: 10, left: 0, bottom: 0, right: 0),
-                             size: .init(width: 90, height: 40))
+                             trailing: view.safeAreaLayoutGuide.trailingAnchor,
+                             centerXaxis: view.centerXAnchor,
+                             centerYaxis: nil,
+                             padding: .init(top: 10, left: 0, bottom: 0, right: 0))
         countryCapital.anchor(top: countryName.bottomAnchor,
-                           leading: nil,
+                           leading: view.safeAreaLayoutGuide.leadingAnchor,
                            bottom: nil,
-                           trailing: nil,
+                           trailing: view.safeAreaLayoutGuide.trailingAnchor,
                            centerXaxis: nil,
-                           centerYaxis: view.centerYAnchor,
-                           padding: .init(top: 10, left: 0, bottom: 0, right: 0),
-                           size: .init(width: 90, height: 40))
+                           centerYaxis: nil,
+                           padding: .init(top: 10, left: 0, bottom: 0, right: 0))
         countryRegion.anchor(top: countryCapital.bottomAnchor,
-                              leading: nil,
+                              leading: view.safeAreaLayoutGuide.leadingAnchor,
                               bottom: nil,
-                              trailing: nil,
+                              trailing: view.safeAreaLayoutGuide.trailingAnchor,
                               centerXaxis: nil,
-                              centerYaxis: view.centerYAnchor,
-                              padding: .init(top: 10, left: 0, bottom: 0, right: 0),
-                              size: .init(width: 90, height: 40))
+                              centerYaxis: nil,
+                              padding: .init(top: 10, left: 0, bottom: 0, right: 0))
     }
 
 

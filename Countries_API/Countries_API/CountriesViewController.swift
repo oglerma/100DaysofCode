@@ -31,11 +31,8 @@ class CountriesViewController: UITableViewController  {
     
     func parse(json: Data){
         let decoder = JSONDecoder()
-        print("parse func called")
         if let jsonCountries = try? decoder.decode([Country].self, from: json) {
             countriesArray = jsonCountries
-            print(countriesArray[0].name)
-            print("Inside countriesArray: \(countriesArray.count)")
         }
     }
     
@@ -48,12 +45,21 @@ class CountriesViewController: UITableViewController  {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         let name = countriesArray[indexPath.row].name
         cell.textLabel?.text = name
+
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailVC()
-        
+        // Cat JPG
+        let url = URL(string: "https://news.nationalgeographic.com/content/dam/news/2018/05/17/you-can-train-your-cat/02-cat-training-NationalGeographic_1484324.ngsversion.1526587209178.adapt.1900.1.jpg")
+        vc.flagImageView.load(url: url!)
+        vc.countryName.text    = "Country: " + countriesArray[indexPath.row].name + "    Population: \(countriesArray[indexPath.row].population)"
+        vc.countryRegion.text  = "Region: " + countriesArray[indexPath.row].region
+        vc.countryCapital.text = "Capital: " + countriesArray[indexPath.row].capital
+        vc.view.backgroundColor = .white
+        vc.title = countriesArray[indexPath.row].name
+
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -65,17 +71,19 @@ struct Country: Codable {
     var capital: String
     var population: Int
     var region: String
-    var flag: String
     
 }
 
-
-
-
-// Possibly loading an image from a URL
-//let url = URL(string: "IMAGE URL HERE")
-//let data = try? Data(contentsOf: url)
-//
-//if let imageData = data {
-//    let image = UIImage(data: imageData)
-//}
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
+}
