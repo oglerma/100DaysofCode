@@ -47,12 +47,16 @@ class CountriesViewController: UITableViewController  {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         let name = countriesArray[indexPath.row].name
-        let capital = countriesArray[indexPath.row].capital
-        let population = countriesArray[indexPath.row].population
-        
-        cell.textLabel?.text = "\(name) \(capital) \(population)"
+        cell.textLabel?.text = name
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = DetailVC()
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     
 }
 
@@ -60,7 +64,12 @@ struct Country: Codable {
     var name: String
     var capital: String
     var population: Int
+    var region: String
+    var flag: String
+    
 }
+
+
 
 
 // Possibly loading an image from a URL
