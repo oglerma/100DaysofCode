@@ -17,6 +17,8 @@
 		37C7AA8B22B994D200C2F169 /* sliceHitEnemy.sks in Resources */ = {isa = PBXBuildFile; fileRef = 37C7AA8822B994D100C2F169 /* sliceHitEnemy.sks */; };
 		37C7AA8C22B994D200C2F169 /* sliceFuse.sks in Resources */ = {isa = PBXBuildFile; fileRef = 37C7AA8922B994D200C2F169 /* sliceFuse.sks */; };
 		37C7AA8D22B994D200C2F169 /* sliceHitBomb.sks in Resources */ = {isa = PBXBuildFile; fileRef = 37C7AA8A22B994D200C2F169 /* sliceHitBomb.sks */; };
+		37C7AA9022B99B0C00C2F169 /* starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = 37C7AA8E22B99B0C00C2F169 /* starfield.sks */; };
+		37C7AA9122B99B0C00C2F169 /* explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 37C7AA8F22B99B0C00C2F169 /* explosion.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		37C7AA8822B994D100C2F169 /* sliceHitEnemy.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceHitEnemy.sks; sourceTree = "<group>"; };
 		37C7AA8922B994D200C2F169 /* sliceFuse.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceFuse.sks; sourceTree = "<group>"; };
 		37C7AA8A22B994D200C2F169 /* sliceHitBomb.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sliceHitBomb.sks; sourceTree = "<group>"; };
+		37C7AA8E22B99B0C00C2F169 /* starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = starfield.sks; sourceTree = "<group>"; };
+		37C7AA8F22B99B0C00C2F169 /* explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = explosion.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 				37C7AA8922B994D200C2F169 /* sliceFuse.sks */,
 				37C7AA8A22B994D200C2F169 /* sliceHitBomb.sks */,
 				37C7AA8822B994D100C2F169 /* sliceHitEnemy.sks */,
+				37C7AA8F22B99B0C00C2F169 /* explosion.sks */,
+				37C7AA8E22B99B0C00C2F169 /* starfield.sks */,
 			);
 			path = "Space Race";
 			sourceTree = "<group>";
@@ -139,6 +145,8 @@
 			files = (
 				37C7AA7C22B9942F00C2F169 /* Main.storyboard in Resources */,
 				37C7AA7322B9942F00C2F169 /* GameScene.sks in Resources */,
+				37C7AA9022B99B0C00C2F169 /* starfield.sks in Resources */,
+				37C7AA9122B99B0C00C2F169 /* explosion.sks in Resources */,
 				37C7AA7E22B9942F00C2F169 /* Assets.xcassets in Resources */,
 				37C7AA8B22B994D200C2F169 /* sliceHitEnemy.sks in Resources */,
 				37C7AA8D22B994D200C2F169 /* sliceHitBomb.sks in Resources */,
