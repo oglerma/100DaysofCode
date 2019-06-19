@@ -11,9 +11,11 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - Properties
-    var starfield : SKEmitterNode!
-    var player    : SKSpriteNode!
-    var scoreLabel: SKLabelNode!
+    var starfield    : SKEmitterNode!
+    var player       : SKSpriteNode!
+    var scoreLabel   : SKLabelNode!
+    var countEnemy   : Int = 0
+    var timerInterval: Double = 1
     
     var score = 0 {
         didSet {
@@ -35,6 +37,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         starfield.zPosition = -1
         
         player = SKSpriteNode(imageNamed: "player")
+        player.name = "player"
         player.position = CGPoint(x: 100, y: 384)
         player.physicsBody = SKPhysicsBody(texture: player.texture!, size: player.size)
         player.physicsBody?.contactTestBitMask = 1
@@ -52,13 +55,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         
-        gameTimer = Timer.scheduledTimer(timeInterval: 0.35, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
+        gameTimer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
 
     }
     
     @objc func createEnemy(){
+        print("THis is timer interval: \(timerInterval)")
         guard let enemy = possibleEnemies.randomElement() else {return}
-        let sprite = SKSpriteNode(imageNamed: enemy)
+        giveEnemyNodeAName(named: enemy)
+        countEnemy += 1
+    }
+
+    func giveEnemyNodeAName(named: String){
+        let sprite = SKSpriteNode(imageNamed: named)
+        sprite.name = named
+        
         sprite.position = CGPoint(x: 1200, y: Int.random(in: 50...736))
         addChild(sprite)
         
@@ -74,10 +85,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         sprite.physicsBody?.linearDamping = 0
         sprite.physicsBody?.angularDamping = 0
     }
-
     
 
     override func update(_ currentTime: TimeInterval) {
+    
+        if countEnemy == 20 {
+            gameTimer?.invalidate()
+            timerInterval -= 0.1
+            gameTimer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(createEnemy), userInfo: nil, repeats: true)
+            countEnemy = 0
+        }
+        
         for node in children {
             // IF the node is off screen by 300 we remove it from the game.
             if node.position.x < -300 {
@@ -104,28 +122,57 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
+    
     // The funciton needed to check if our player made contact
     // with some node.
     func didBegin(_ contact: SKPhysicsContact) {
-        let explosion = SKEmitterNode(fileNamed: "explosion")!
-        explosion.position = player.position
-        addChild(explosion)
+        guard let NodeA = contact.bodyA.node else {return}
+        guard let NodeB = contact.bodyB.node else {return}
         
         
-        player.removeFromParent()
-        isGameOver = true
+        if NodeA.name == "player"{
+            collision(between: NodeA, and: NodeB)
+        } else if NodeB.name == "player"{
+            collision(between: NodeB, and: NodeA)
+        }
+        
+
     }
     
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        <#code#>
-//    }
+    func collision(between spaceShip: SKNode, and object2: SKNode){
+        
+        if object2.name == "ball"{
+            destroy(node: spaceShip)
+        } else if object2.name == "penguin"{
+            destroy(node: object2)
+        } else if object2.name == "hammer" {
+            destroy(node: object2)
+        }
+    }
     
     
+    func destroy(node: SKNode){
+        if node.name == "player"{
+            let explosion = SKEmitterNode(fileNamed: "explosion")!
+            explosion.position = player.position
+            addChild(explosion)
+            node.removeFromParent()
+            isGameOver = true
+            stopCreatingDebri()
+        } else {
+            let explosion = SKEmitterNode(fileNamed: "sliceHitEnemy")!
+            explosion.position = node.position
+            addChild(explosion)
+            node.removeFromParent()
+        }
+    }
+    
+    func stopCreatingDebri(){
+        gameTimer?.invalidate()
+        
+    }
+
 }
 
 
-//TODO: - Give the player a name so that we can debug it.
-//TODO: - Implement the touchesEnded method so that when the player lifts it's finger it doesn't transport to the other location.
-// TODO: - Subtract the timer 0.1 seconds every time we create 20 enemies.
-// TODO: - Learn how to use the invalidate function for game timer.
-// TODO: - Stop creating Debri when the player has died. 
+
