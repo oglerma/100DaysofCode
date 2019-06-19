@@ -103,12 +103,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.position = location
     }
     
+    
+    // The funciton needed to check if our player made contact
+    // with some node.
     func didBegin(_ contact: SKPhysicsContact) {
         let explosion = SKEmitterNode(fileNamed: "explosion")!
         explosion.position = player.position
         addChild(explosion)
         
+        
         player.removeFromParent()
         isGameOver = true
     }
+    
+//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        <#code#>
+//    }
+    
+    
 }
+
+
+//TODO: - Give the player a name so that we can debug it.
+//TODO: - Implement the touchesEnded method so that when the player lifts it's finger it doesn't transport to the other location.
+// TODO: - Subtract the timer 0.1 seconds every time we create 20 enemies.
+// TODO: - Learn how to use the invalidate function for game timer.
+// TODO: - Stop creating Debri when the player has died. 
