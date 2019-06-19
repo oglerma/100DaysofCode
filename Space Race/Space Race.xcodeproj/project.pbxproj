@@ -49,6 +49,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		373FDD1A22BAA93C006EFD70 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				37C7AA7022B9942F00C2F169 /* AppDelegate.swift */,
+				37C7AA7822B9942F00C2F169 /* GameViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		373FDD1B22BAA94B006EFD70 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				37C7AA7A22B9942F00C2F169 /* Main.storyboard */,
+				37C7AA7622B9942F00C2F169 /* GameScene.swift */,
+				37C7AA7F22B9942F00C2F169 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		373FDD1C22BAA953006EFD70 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		373FDD1D22BAA95A006EFD70 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				37C7AA7D22B9942F00C2F169 /* Assets.xcassets */,
+				37C7AA7222B9942F00C2F169 /* GameScene.sks */,
+				37C7AA8922B994D200C2F169 /* sliceFuse.sks */,
+				37C7AA8A22B994D200C2F169 /* sliceHitBomb.sks */,
+				37C7AA8822B994D100C2F169 /* sliceHitEnemy.sks */,
+				37C7AA8F22B99B0C00C2F169 /* explosion.sks */,
+				37C7AA8E22B99B0C00C2F169 /* starfield.sks */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		37C7AA6422B9942F00C2F169 = {
 			isa = PBXGroup;
 			children = (
@@ -68,19 +108,11 @@
 		37C7AA6F22B9942F00C2F169 /* Space Race */ = {
 			isa = PBXGroup;
 			children = (
-				37C7AA7022B9942F00C2F169 /* AppDelegate.swift */,
-				37C7AA7222B9942F00C2F169 /* GameScene.sks */,
-				37C7AA7622B9942F00C2F169 /* GameScene.swift */,
-				37C7AA7822B9942F00C2F169 /* GameViewController.swift */,
-				37C7AA7A22B9942F00C2F169 /* Main.storyboard */,
-				37C7AA7D22B9942F00C2F169 /* Assets.xcassets */,
-				37C7AA7F22B9942F00C2F169 /* LaunchScreen.storyboard */,
+				373FDD1D22BAA95A006EFD70 /* Resources */,
+				373FDD1C22BAA953006EFD70 /* Model */,
+				373FDD1B22BAA94B006EFD70 /* View */,
+				373FDD1A22BAA93C006EFD70 /* Controller */,
 				37C7AA8222B9942F00C2F169 /* Info.plist */,
-				37C7AA8922B994D200C2F169 /* sliceFuse.sks */,
-				37C7AA8A22B994D200C2F169 /* sliceHitBomb.sks */,
-				37C7AA8822B994D100C2F169 /* sliceHitEnemy.sks */,
-				37C7AA8F22B99B0C00C2F169 /* explosion.sks */,
-				37C7AA8E22B99B0C00C2F169 /* starfield.sks */,
 			);
 			path = "Space Race";
 			sourceTree = "<group>";
