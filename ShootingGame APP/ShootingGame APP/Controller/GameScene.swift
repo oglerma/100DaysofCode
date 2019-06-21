@@ -11,26 +11,17 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
+    var curtainImg: SKSpriteNode = {
+       let curtain = SKSpriteNode(imageNamed: "curtains")
+        curtain.position = CGPoint(x: 512, y: 384)
+        curtain.zPosition = -1
+//        curtain.blendMode = .replace
+        return curtain
+    }()
     
     override func didMove(to view: SKView) {
-        
+        addChild(curtainImg)
     }
     
-    func didBegin(_ contact: SKPhysicsContact) {
-        
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
-        <#code#>
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        <#code#>
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        <#code#>
-    }
 
-    
 }
