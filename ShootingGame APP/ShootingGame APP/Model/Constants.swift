@@ -77,7 +77,7 @@ enum Location {
     var value: Int {
         switch self {
         case .top:
-            return 480
+            return 460
         case .middle:
             return 320
         case .bottom:
