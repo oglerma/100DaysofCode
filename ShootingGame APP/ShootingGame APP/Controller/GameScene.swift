@@ -39,6 +39,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return gr
     }()
     
+
+    
     var gameOverLbl: SKSpriteNode = {
         let gameOver = SKSpriteNode(imageNamed: "gameOver")
         gameOver.position = CGPoint(x: 512, y: 384)
@@ -46,24 +48,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }()
     
     var scoreLbl: SKLabelNode = {
-        let score = SKLabelNode(fileNamed: "scoreLabel")
-        score?.zPosition = 9
-        score?.position = CGPoint(x: 512, y: 30)
-        return score ?? SKLabelNode()
+        let score = SKLabelNode(text: "Score: 0")
+        score.zPosition = 9
+        score.position = CGPoint(x: 512, y: 30)
+        return score
     }()
     
     var score = 0 {
         didSet{
-            scoreLbl.text = "\(score)"
+            scoreLbl.text = "Score: \(score)"
         }
     }
     // MARK: - TIME TICKERS
     var gameTicker: Timer?
 
     var targets = [SKSpriteNode]()
+    
     // MARK: - GAME LOGIC BEGINS
-    
-    
     override func didMove(to view: SKView) {
         // SET sizes
         curtainImg.size = view.frame.size
@@ -71,7 +72,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backWater.size  = CGSize(width: view.frame.width, height: backWater.frame.height)
         grass.size      = CGSize(width: view.frame.width, height: grass.frame.height)
         
-        addChildNodes(scoreLbl,curtainImg,frontWater,backWater,grass)
+        
+        addChildNodes(curtainImg,frontWater,backWater,grass,scoreLbl)
         startGame()
     }
     
@@ -84,13 +86,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     @objc func doSomething(){
-        print("Inside of do somehting")
         let sprite = createRandomTarget()
         addChild(sprite)
         
         // Direction will be either right 1100 or left -1100
         let direction = sprite.position.x == 0 ? 1100 : -1100
-        let move = SKAction.move(by: CGVector(dx: direction, dy: 0), duration: 3)
+        let move = SKAction.move(by: CGVector(dx: direction, dy: 0), duration: 6)
         sprite.run(move)
         
     }
@@ -105,26 +106,81 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    func clearGame(){
-        gameTicker?.invalidate()
-    }
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        score += 1
+        let shootingSound = SKAction.playSoundFileNamed("shot.wav", waitForCompletion: false)
+        run(shootingSound)
+        
         guard let touch = touches.first else {return}
+        
         let location = touch.location(in: self)
+        showCursor(at: location)
+        
         let allNodesAroundTheTouchedLocation = nodes(at: location)
         
-        
-        
-        
-        
+        allNodesAroundTheTouchedLocation.forEach{nodeHit(node: $0)}
         
     }
-    
-    func targetHit(){
+
+    func showCursor(at location: CGPoint){
+        let cursorImage = SKSpriteNode(imageNamed: "cursor")
+        cursorImage.zPosition = 8
+        cursorImage.position = location
+        addChild(cursorImage)
         
+        let removeCursorImage = SKAction.run {
+            cursorImage.removeFromParent()
+        }
+        
+        let cursorSequence = SKAction.sequence([SKAction.wait(forDuration: 0.35), removeCursorImage])
+        cursorImage.run(cursorSequence)
     }
     
+    // MARK: - Check and Delete
+    func nodeHit(node: SKNode){
+        switch node.name {
+        case "badTarget":
+            score -= 2
+            removeHitTarget(node: node)
+        case "goodDuckOne":
+            score += 2
+            removeHitTarget(node: node)
+        case "goodDuckTwo":
+            score += 4
+            removeHitTarget(node: node)
+        case "goodDuckThree":
+            score += 6
+            removeHitTarget(node: node)
+        default:
+            break
+        }
+    }
+    
+    func deleteTarget(node: SKSpriteNode,atIndex index: Int){
+        targets.remove(at: index)
+        node.removeFromParent()
+    }
+    
+    func removeHitTarget(node: SKNode){
+        
+        node.removeAllActions()
+
+        let reduceSize = SKAction.scale(by: 0.75, duration: 0.45)
+        let dropTarget = SKAction.run {
+            node.physicsBody?.isDynamic = true
+        }
+        let wait = SKAction.wait(forDuration: 0.2)
+        let delete = SKAction.removeFromParent()
+        let sequence = SKAction.sequence([reduceSize,wait,dropTarget,wait, delete])
+        
+        node.run(sequence)
+        print("inside remove hit targetcxd")
+
+    }
+
+    // MARK: - Create Targets
     func createRandomTarget() -> SKSpriteNode {
         let num = (Int.random(in: 0...9) % 3)
         let randomSprite = SKSpriteNode(imageNamed: "target\(num)")
@@ -173,10 +229,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func deleteTarget(node: SKSpriteNode,atIndex index: Int){
-        targets.remove(at: index)
-        node.removeFromParent()
+    func clearGame(){
+        gameTicker?.invalidate()
     }
+    
     // MARK: - Handling game logic
     /***************************************************
      * moveWater gives the effect of the water images moving back and forth.
