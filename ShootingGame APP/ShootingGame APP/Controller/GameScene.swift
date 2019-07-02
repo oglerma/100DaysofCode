@@ -42,8 +42,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     
     var gameOverLbl: SKSpriteNode = {
-        let gameOver = SKSpriteNode(imageNamed: "gameOver")
+        let gameOver = SKSpriteNode(imageNamed: "game-over")
         gameOver.position = CGPoint(x: 512, y: 384)
+        gameOver.zPosition = 8
         return gameOver
     }()
     
@@ -54,13 +55,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return score
     }()
     
+    var timeLabel: SKLabelNode = {
+        let timelbl = SKLabelNode(text: "Time Left: 60")
+        timelbl.zPosition = 8
+        timelbl.position = CGPoint(x: 60, y: 0)
+        return timelbl
+    }()
+    
     var score = 0 {
         didSet{
             scoreLbl.text = "Score: \(score)"
         }
     }
+    
+    
     // MARK: - TIME TICKERS
     var gameTicker: Timer?
+    var timeCounter: Timer?
+    var gameTime = 60 {
+        didSet {
+            timeLabel.text = "Time Left: \(gameTime)"
+        }
+    }
 
     var targets = [SKSpriteNode]()
     
@@ -81,7 +97,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func startGame(){
         clearGame()
         moveWater()
+        addChild(timeLabel)
         gameTicker = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(doSomething), userInfo: nil, repeats: true)
+        timeCounter = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
+        
+    }
+    @objc func countDown(){
+        gameTime -= 1
+        if gameTime <= 0 {
+            showGameOver()
+        }
+    }
+    
+    func showGameOver(){
+        timeCounter?.invalidate()
+        addChild(gameOverLbl)
+        
+        
         
     }
 
@@ -231,6 +263,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func clearGame(){
         gameTicker?.invalidate()
+        timeCounter?.invalidate()
     }
     
     // MARK: - Handling game logic
@@ -253,12 +286,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     
 }
-
-
-
-
-
-
 
 
 // MARK: - HELPER functions
