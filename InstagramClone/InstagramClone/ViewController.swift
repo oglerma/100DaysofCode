@@ -110,29 +110,112 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @objc func handleSignUp(){
         guard let email    = emailTextField.text   , email.count > 8    else {return}
         guard let username = usernameTextField.text, username.count > 0 else {return}
         guard let password = passwordTextField.text, password.count > 0 else {return }
-
         
-      
         Auth.auth().createUser(withEmail: email, password: password, completion: {
             (user, error) in
-
-            guard let uid = user?.user.uid else {return}
-            let usernameValues = ["username", username]
-            let values = [uid: usernameValues]
-            // Save in the database
-            Database.database().reference().updateChildValues(values, withCompletionBlock: { (err, ref) in
-                if let err = error {
-                    print("Failed to create user: ", err)
+            
+            if let err = error {
+                print("\(err)")
+                return
+            }
+            
+            print("Successfully created user:", user?.user.uid ?? "")
+            
+            
+            guard let image = self.plusPhotoButton.imageView?.image else {return}
+            guard let uploadData = image.jpegData(compressionQuality: 0.3) else {return}
+            let filename = NSUUID().uuidString
+            
+            
+            let storeageRef = Storage.storage().reference().child("profile_image").child(filename)
+            
+            storeageRef.putData(uploadData, metadata: nil, completion: { (metadata, err) in
+                if let err = err {
+                    print("Failed to upload profile image \(err)")
                     return
                 }
-                print("Successfully created user: ", user?.user.uid ?? "")
+                
+                storeageRef.downloadURL(completion: { (downloadURL, err) in
+                    if let err = err {
+                        print("Failed to fetch downloadURL: \(err)")
+                        return
+                    }
+                    
+                    guard let profileImageUrl = downloadURL?.absoluteString else {return}
+                    print("Successfully uploaded profile image:", profileImageUrl)
+                    
+                    guard let uid = user?.user.uid else {return}
+                    let dictionaryValues = ["username": username, "profileImageURL": profileImageUrl]
+                    let values = [uid: dictionaryValues]
+                    
+                    // Save in the database
+                    Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, ref) in
+                        if let err = error {
+                            print("Failed to save user in the database: ", err)
+                            return
+                        }
+                        print("Successfully saved user info to Database: ", user?.user.uid ?? "")
+                    })
+                })
             })
         })
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
