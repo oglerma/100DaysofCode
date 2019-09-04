@@ -114,108 +114,60 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    @objc func handleSignUp(){
-        guard let email    = emailTextField.text   , email.count > 8    else {return}
-        guard let username = usernameTextField.text, username.count > 0 else {return}
-        guard let password = passwordTextField.text, password.count > 0 else {return }
+    @objc func handleSignUp() {
+        guard let email = emailTextField.text, !email.isEmpty else { return }
+        guard let username = usernameTextField.text, !username.isEmpty else { return }
+        guard let password = passwordTextField.text, !password.isEmpty else { return }
         
-        Auth.auth().createUser(withEmail: email, password: password, completion: {
-            (user, error) in
+        Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error: Error?) in
             
             if let err = error {
-                print("\(err)")
+                print("Failed to create user:", err)
                 return
             }
             
             print("Successfully created user:", user?.user.uid ?? "")
             
+            guard let image = self.plusPhotoButton.imageView?.image else { return }
             
-            guard let image = self.plusPhotoButton.imageView?.image else {return}
-            guard let uploadData = image.jpegData(compressionQuality: 0.3) else {return}
+            guard let uploadData = image.jpegData(compressionQuality: 0.3) else { return }
+            
             let filename = NSUUID().uuidString
             
-            
-            let storeageRef = Storage.storage().reference().child("profile_image").child(filename)
-            
-            storeageRef.putData(uploadData, metadata: nil, completion: { (metadata, err) in
+            let storageRef = Storage.storage().reference().child("profile_images").child(filename)
+            storageRef.putData(uploadData, metadata: nil, completion: { (metadata, err) in
+                
                 if let err = err {
-                    print("Failed to upload profile image \(err)")
+                    print("Failed to upload profile image:", err)
                     return
                 }
                 
-                storeageRef.downloadURL(completion: { (downloadURL, err) in
+                // Firebase 5 Update: Must now retrieve downloadURL
+                storageRef.downloadURL(completion: { (downloadURL, err) in
                     if let err = err {
-                        print("Failed to fetch downloadURL: \(err)")
+                        print("Failed to fetch downloadURL:", err)
                         return
                     }
                     
-                    guard let profileImageUrl = downloadURL?.absoluteString else {return}
+                    guard let profileImageUrl = downloadURL?.absoluteString else { return }
+                    
                     print("Successfully uploaded profile image:", profileImageUrl)
                     
-                    guard let uid = user?.user.uid else {return}
-                    let dictionaryValues = ["username": username, "profileImageURL": profileImageUrl]
+                    guard let uid = user?.user.uid else { return }
+                    let dictionaryValues = ["username": username, "profileImageUrl": profileImageUrl]
                     let values = [uid: dictionaryValues]
                     
-                    // Save in the database
                     Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, ref) in
-                        if let err = error {
-                            print("Failed to save user in the database: ", err)
+                        if let err = err {
+                            print("Failed to save user info into db:", err)
                             return
                         }
-                        print("Successfully saved user info to Database: ", user?.user.uid ?? "")
+                        print("Successfully saved user info to db")
                     })
                 })
             })
         })
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
